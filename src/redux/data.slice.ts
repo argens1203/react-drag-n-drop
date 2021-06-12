@@ -31,14 +31,22 @@ const dataSlice = createSlice({
             if (!state.isChildren[parent]){
                 state.isChildren[parent] = {};
             }
+            if (child === parent){
+                return;
+            }
             state.isChildren[parent][child] = true;
+            state.root[child] = false; //TODO: test only , use boolean
         },
         removeParent: (state, action) => {
             const {child, parent} = action.payload;
             if (!state.isChildren[parent]){
                 state.isChildren[parent] = {}
             }
+            if (child === parent){
+                return;
+            }
             delete state.isChildren[parent][child];
+            state.root[child] = true;
         }
     }
 });

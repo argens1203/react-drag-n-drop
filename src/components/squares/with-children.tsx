@@ -1,6 +1,10 @@
 import {StyledSquare} from "./styled-square";
 import {RootState} from "../../redux/store";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {useDrag, useDrop} from "react-dnd";
+import {ItemTypes} from "../../drag/item-types.const";
+import {BlockTransfer} from "../../drag/block-transfer.type";
+import {setParent} from "../../redux/data.slice";
 
 type Props = {
   id: string;
@@ -12,10 +16,27 @@ export function SquareWithChildren(props: Props) {
   const childMap = useSelector((state: RootState) => state.block.isChildren[id]) || {};
   const data = useSelector((state: RootState) => state.block.blocks[id]) || {};
   const children = Object.entries(childMap).filter(([, v]) => !!v).map(([k]) => k);
+
+  const dispatch = useDispatch();
+  const [, drag] = useDrag(() => ({
+    type: ItemTypes.BLOCK,
+    item: {id}
+  }));
+  const [, drop] = useDrop(() => ({
+    accept: ItemTypes.BLOCK,
+    drop: (item: BlockTransfer) => {
+      dispatch(setParent({child: item.id, parent: id}))
+    }
+  }));
+
   return (
     <>
+      <div ref={drop}>
+        <div ref={drag}>
       <StyledSquare level={level} id={id} {...data}/>
-      {children.map((id)=><SquareWithChildren id={id} level={level + 1}/>)}
+        </div>
+      </div>
+      {children.map((id)=><SquareWithChildren key={id} id={id} level={level + 1}/>)}
     </>
   )
 }
