@@ -1,8 +1,8 @@
-import dataReducer from "./data/data.slice";
+import blockReducer from "./data.slice";
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 
-const reducer = combineReducers({data: dataReducer});
+const reducer = combineReducers({block: blockReducer});
 export const store = configureStore({
     reducer: reducer,
     middleware: [thunk]
