@@ -1,10 +1,9 @@
-import './App.css';
-import {Button, Container, Typography} from "@material-ui/core";
-import {StyledSquare} from "./components/squares/styled-square";
-import React from "react";
+import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {generate} from 'short-uuid';
-import {putBlock, addRoot} from './redux/data.slice';
+import {Button, Container, Typography} from "@material-ui/core";
+import './App.css';
+import {putBlock, addRoot, removeRoot, setParent} from './redux/data.slice';
 import {RootState} from "./redux/store";
 import {SquareWithChildren} from "./components/squares/with-children";
 
