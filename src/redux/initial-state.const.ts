@@ -4,16 +4,18 @@ type BlockLookup = {
 
 const initialBlockLookup: BlockLookup = {};
 
-type ParentLookup = {
-    [id: string]: string
+type ChildLookup = {
+    [id: string]: {
+        [id: string]: boolean
+    }
 }
 
-const initialParentLookup: ParentLookup = {};
+const initialChildLookup: ChildLookup = {};
 
 const initialRoot: Record<string, boolean> = {};
 
 export const initialBlockState = {
     blocks: initialBlockLookup,
-    findParent: initialParentLookup,
+    isChildren: initialChildLookup,
     root: initialRoot
-}
+};

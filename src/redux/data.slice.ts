@@ -28,14 +28,20 @@ const dataSlice = createSlice({
         },
         setParent: (state, action) => {
             const {child, parent} = action.payload;
-            if (!parent) {
-                delete state.findParent[child];
-            } else {
-                state.findParent[child] = parent;
+            if (!state.isChildren[parent]){
+                state.isChildren[parent] = {};
             }
+            state.isChildren[parent][child] = true;
+        },
+        removeParent: (state, action) => {
+            const {child, parent} = action.payload;
+            if (!state.isChildren[parent]){
+                state.isChildren[parent] = {}
+            }
+            delete state.isChildren[parent][child];
         }
     }
 });
 
 export default dataSlice.reducer;
-export const {putBlock, editBlock, removeBlock, addRoot, removeRoot, setParent} = dataSlice.actions;
+export const {putBlock, editBlock, removeBlock, addRoot, removeRoot, setParent, removeParent} = dataSlice.actions;

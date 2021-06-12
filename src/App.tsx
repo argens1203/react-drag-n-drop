@@ -1,16 +1,37 @@
 import './App.css';
-import {Square} from "./components/squares/square";
-import {Container, Typography} from "@material-ui/core";
+import {Button, Container, Typography} from "@material-ui/core";
+import {StyledSquare} from "./components/squares/styled-square";
+import React from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {generate} from 'short-uuid';
+import {putBlock, addRoot} from './redux/data.slice';
+import {RootState} from "./redux/store";
+import {SquareWithChildren} from "./components/squares/with-children";
+
+const initColors = ['red', 'blue', 'grey', 'green', 'yellow', 'black'];
+
 
 function App() {
-    return (
-        <Container>
-            <Typography>
-                I'm not dead
-            </Typography>
-            <Square/>
-        </Container>
-    );
+  const rootLookup = useSelector((state: RootState) => state.block.root) || [];
+  const rootIds = Object.entries(rootLookup).filter(([, b]) => !!b).map(([k]) => k);
+  const dispatch = useDispatch();
+  const initBlocks = () => {
+    const getBlock = (color: string) => ({
+      id: generate(),
+      color
+    });
+    initColors.forEach(color => {
+      const block = getBlock(color);
+      dispatch(putBlock(block));
+      dispatch(addRoot(block.id));
+    });
+  };
+  return (
+    <Container>
+      <Button onClick={initBlocks}>initBlocks</Button>
+      {rootIds.map(id => <SquareWithChildren key={id} id={id}/>)}
+    </Container>
+  );
 }
 
 export default App;
