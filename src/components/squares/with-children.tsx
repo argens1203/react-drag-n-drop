@@ -13,9 +13,10 @@ type Props = {
 
 export function SquareWithChildren(props: Props) {
   const {id, level = 0} = props;
-  const childMap = useSelector((state: RootState) => state.block.isChildren[id]) || {};
   const data = useSelector((state: RootState) => state.block.blocks[id]) || {};
-  const children = Object.entries(childMap).filter(([, v]) => !!v).map(([k]) => k);
+  const childMap = useSelector((state: RootState) => state.block.isChildren[id]) || {};
+  const childOrder = useSelector((state: RootState) => state.block.childrenOrder[id] || []);
+  const children = childOrder.filter(id => childMap[id]);
 
   const dispatch = useDispatch();
   const [, drag] = useDrag(() => ({

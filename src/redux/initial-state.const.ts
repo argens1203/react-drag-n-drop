@@ -12,6 +12,12 @@ type ChildLookup = {
 
 const initialChildLookup: ChildLookup = {};
 
+export type ChildOrder ={
+    [id: string]: string[];
+};
+
+const initialChildOrder: ChildOrder = {};
+
 export type ParentLookup = {
     [id: string]: string;
 }
@@ -21,6 +27,7 @@ const initialParentLookup: ParentLookup = {};
 export const initialBlockState = {
     blocks: initialBlockLookup,
     isChildren: initialChildLookup,
+    childrenOrder: initialChildOrder,
     findParent: initialParentLookup
 };
 

@@ -22,9 +22,6 @@ const dataSlice = createSlice({
         },
         setParent: (state, action) => {
             const {child, parent} = action.payload;
-            if (!state.isChildren[parent]){
-                state.isChildren[parent] = {};
-            }
             if (child === parent){
                 return;
             }
@@ -69,6 +66,15 @@ function detachParent(state: BlockSliceType, child: string){
 }
 
 function addParent(state: BlockSliceType, child: string, parent: string){
+    if (!state.isChildren[parent]){
+        state.isChildren[parent] = {};
+    }
+    if (!state.childrenOrder[parent]){
+        state.childrenOrder[parent] = [];
+    }
     state.isChildren[parent][child] = true;
     state.findParent[child] = parent;
+    if (!state.childrenOrder[parent].includes(child)){
+        state.childrenOrder[parent].push(child);
+    }
 }
