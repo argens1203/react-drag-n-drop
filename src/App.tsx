@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {generate} from 'short-uuid';
 import {Button, Container, Typography} from "@material-ui/core";
 import './App.css';
-import {putBlock, addRoot, removeRoot, setParent} from './redux/data.slice';
+import {putBlock, setParentAsRoot} from './redux/data.slice';
 import {RootState} from "./redux/store";
 import {SquareWithChildren} from "./components/squares/with-children";
 
@@ -22,7 +22,7 @@ function App() {
     initColors.forEach(color => {
       const block = getBlock(color);
       dispatch(putBlock(block));
-      dispatch(addRoot(block.id));
+      dispatch(setParentAsRoot(block.id));
     });
   };
   return (
