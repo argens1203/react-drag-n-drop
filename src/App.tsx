@@ -13,8 +13,8 @@ const initColors = ['red', 'blue', 'grey', 'green', 'yellow', 'black'];
 
 function App() {
   const rootLookup = useSelector((state: RootState) => state.block.isChildren[ROOT_ID]) || {};
-  const rootIds = Object.entries(rootLookup).filter(([, b]) => !!b).map(([k]) => k);
-  const parentLookup = useSelector((state: RootState) => state.block.findParent);
+  const rootOrder = useSelector((state: RootState) => state.block.childrenOrder[ROOT_ID]) || [];
+  const rootIds = rootOrder.filter(id => rootLookup[id]);
   const dispatch = useDispatch();
   const initBlocks = () => {
     const getBlock = (color: string) => ({
