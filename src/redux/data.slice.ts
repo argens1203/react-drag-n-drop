@@ -1,6 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {initialBlockState, ParentLookup} from "./initial-state.const";
+import {BlockSliceType, initialBlockState, ParentLookup} from "./initial-state.const";
 import {Block} from "./block.entity";
+import {ROOT_ID} from "./root-id.const";
+import {RootState} from "./store";
 
 const dataSlice = createSlice({
     name: 'data',
@@ -18,15 +20,6 @@ const dataSlice = createSlice({
             const id: string = action.payload;
             delete state.blocks[id];
         },
-        setParentAsRoot: (state, action) => {
-            const id: string = action.payload;
-            const parent = state.findParent[id];
-            if (parent){
-                state.isChildren[parent][id] = false;
-            }
-            state.root[id] = true;
-            state.findParent[id] = null;
-        },
         setParent: (state, action) => {
             const {child, parent} = action.payload;
             if (!state.isChildren[parent]){
@@ -35,32 +28,47 @@ const dataSlice = createSlice({
             if (child === parent){
                 return;
             }
-            if (isCircularRef(child, parent, state.findParent)){
+            if (child === ROOT_ID){
                 return;
-                // parent.parent = child.parent;
-                // child.parent = parent;
             }
-            const prevParent = state.findParent[child];
-            if (prevParent){
-                state.isChildren[prevParent][child] = false;
+            if (isAncestor(child, parent, state.findParent)){
+                const ancestor = child;
+                const descendant = parent;
+                const grandparent = state.findParent[ancestor];
+                detachParent(state, descendant);
+                addParent(state, descendant, grandparent);
+                detachParent(state, ancestor);
+                addParent(state, ancestor, descendant);
+                return;
             }
-            state.isChildren[parent][child] = true;
-            state.findParent[child] = parent;
-            state.root[child] = false;
+            detachParent(state, child);
+            addParent(state, child, parent);
         }
     }
 });
 
 export default dataSlice.reducer;
-export const {putBlock, editBlock, removeBlock, setParentAsRoot, setParent} = dataSlice.actions;
+export const {putBlock, editBlock, removeBlock, setParent} = dataSlice.actions;
 
-function isCircularRef(child: string, parent: string, parentLookup: ParentLookup){
-    let curr: string | null = parent;
-    while(curr){
-        if (curr === child){
+function isAncestor(ancestor: string, descendant: string, parentLookup: ParentLookup){
+    let curr: string = descendant;
+    while(curr !== ROOT_ID){
+        if (curr === ancestor){
             return true;
         }
         curr = parentLookup[curr];
     }
     return false;
+}
+
+function detachParent(state: BlockSliceType, child: string){
+    const prevParent = state.findParent[child];
+    if (prevParent){
+        state.isChildren[prevParent][child] = false;
+    }
+}
+
+function addParent(state: BlockSliceType, child: string, parent: string){
+    state.isChildren[parent][child] = true;
+    state.findParent[child] = parent;
 }
