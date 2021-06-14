@@ -2,7 +2,7 @@ import React from "react";
 import {useSelector} from "react-redux";
 import {Box} from "@material-ui/core";
 import {RootState} from "../redux/store";
-import {ReorderSpacing} from "../components/gaps/reorder-spacing";
+import {ReorderSpacing} from "./reorder-spacing";
 import {DroppableBlock} from "./droppable-block";
 import { BlockDragHandle } from "./block-drag-handle";
 import {BlockData} from './interfaces/block-data.interface';
