@@ -13,11 +13,14 @@ export function ReorderSpacing(props: BlockData) {
     const {hovered, canDrop} = collectedProps;
     let backgroundColor = 'transparent';
     if (hovered && canDrop) {
-        backgroundColor = 'green';
+        backgroundColor = 'blue';
     }
     return (
         <div ref={ref} style={{
-            height: 10, display: "flex", border: `1px solid ${data.color}`, backgroundColor: backgroundColor,
+            height: 10,
+            display: "flex",
+            // border: `1px solid ${data.color}`,
+            backgroundColor: backgroundColor,
             marginLeft: marginPerLevel * level,
         }}/>
     )
