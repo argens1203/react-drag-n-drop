@@ -1,13 +1,12 @@
 import React from "react";
 import {useDrop} from "react-dnd";
-import {DraggableBlock} from "./draggable-block";
 import {ItemTypes} from "../../drag/item-types.const";
 import {BlockTransfer} from "../../drag/block-transfer.type";
 import {setParent} from "../../redux/data.slice";
 import {useDispatch} from "react-redux";
-import { Hoverable } from "./block-display";
+import {BlockDisplay, Hoverable} from "./block-display";
 
-interface Block {
+export interface Block {
     id: string;
 }
 
@@ -35,4 +34,4 @@ function withDropzone(){
     }
 }
 
-export const DraggableDroppableBlock = withDropzone()(DraggableBlock);
+export const DroppableBlock = withDropzone()(BlockDisplay);

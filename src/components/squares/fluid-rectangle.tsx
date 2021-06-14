@@ -1,3 +1,5 @@
+import {Box} from "@material-ui/core";
+
 export type Props = {
     color?: string;
     style?: Record<string, any>;
@@ -7,6 +9,6 @@ export type Props = {
 export function FluidRectangle(props: Props) {
     const {color = 'grey', height = 100, style = {}} = props;
     return (
-        <div style={{backgroundColor: color, height, ...style}}/>
+        <Box flex={1} style={{backgroundColor: color, height, width: 200, ...style}}/>
     )
 }
