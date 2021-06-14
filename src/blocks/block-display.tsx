@@ -14,9 +14,8 @@ export const BlockDisplay = React.forwardRef((props: Props, ref: ForwardedRef<HT
 
     const marginLeft = level * marginPerLevel;
     const opacity = hovered && canDrop ? 0.5 : 1;
-    const flex = 1;
 
     return (
-        <div ref={ref} style={{backgroundColor: color, height: 100, width: 200, marginLeft, opacity, flex}}/>
+        <div ref={ref} style={{backgroundColor: color, height: 100, marginLeft, opacity}}/>
     )
 })

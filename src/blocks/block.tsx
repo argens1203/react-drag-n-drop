@@ -15,10 +15,12 @@ export function Block(props: BlockData) {
 
     return (
         <>
-            <ReorderSpacing id={id}/>
             <Box flexDirection={'row'} display={'flex'} alignItems={'center'} position={'relative'}>
                 <BlockDragHandle id={id}/>
-                <DroppableBlock id={id}/>
+                <Box flexDirection={'column'} display={'flex'} flex={1} alignItems={'stretch'}>
+                    <ReorderSpacing id={id}/>
+                    <DroppableBlock id={id}/>
+                </Box>
             </Box>
             {children.map((id) => <Block key={id} id={id}/>)}
         </>
