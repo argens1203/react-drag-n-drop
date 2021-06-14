@@ -5,7 +5,7 @@ import {BlockTransfer} from "../../drag/block-transfer.type";
 import {putBeforeAndSetSibling} from "../../redux/data.slice";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
-import {marginPerLevel} from "../blocks/margin-per-level.const";
+import {marginPerLevel} from "../../blocks/constants/margin-per-level.const";
 
 export type Props = {
     id: string;

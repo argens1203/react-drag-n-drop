@@ -33,8 +33,6 @@ const dataSlice = createSlice({
         },
         putBeforeAndSetSibling: (state, action) => {
             const {target, before} = action.payload;
-            console.log(`target: ${target}`);
-            console.log(`before: ${before}`);
             if (before === ROOT_ID){
                 return;
             }
