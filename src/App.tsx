@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {generate} from 'short-uuid';
-import {Button, Container, Typography} from "@material-ui/core";
+import {Box, Button, Container, Typography} from "@material-ui/core";
 import './App.css';
 import {putBlock, setParent} from './redux/data.slice';
 import {RootState} from "./redux/store";
-import {SquareWithChildren} from "./components/squares/with-children";
+import {BlockWithChildren} from "./components/blocks/with-children";
 import {ROOT_ID} from "./redux/root-id.const";
 
 const initColors = ['red', 'blue', 'grey', 'green', 'yellow', 'black'];
@@ -30,7 +30,7 @@ function App() {
   return (
     <Container>
       <Button onClick={initBlocks}>initBlocks</Button>
-      {rootIds.map(id => <SquareWithChildren key={id} id={id}/>)}
+      {rootIds.map(id => <BlockWithChildren key={id} id={id}/>)}
     </Container>
   );
 }

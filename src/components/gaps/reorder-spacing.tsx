@@ -5,13 +5,15 @@ import {BlockTransfer} from "../../drag/block-transfer.type";
 import {putBeforeAndSetSibling} from "../../redux/data.slice";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
+import { marginPerLevel } from "../blocks/margin-per-level.const";
 
 export type Props = {
     id: string;
+    level?: number;
 };
 
 export function ReorderSpacing(props: Props) {
-    const {id} = props;
+    const {id, level = 0} = props;
     const data = useSelector((state: RootState) => state.block.blocks[id]) || {};
     const dispatch = useDispatch();
     const [collectedProps, reorderDrop] = useDrop(() => ({
@@ -27,12 +29,13 @@ export function ReorderSpacing(props: Props) {
     }));
     const {hovered, canDrop} = collectedProps;
     let backgroundColor = 'transparent';
-    if (hovered) {
-        backgroundColor = canDrop ? 'green' : 'red';
+    if (hovered && canDrop) {
+        backgroundColor = 'green';
     }
     return (
         <div ref={reorderDrop} style={{
-            height: 10, display: "flex", border: `1px solid ${data.color}`, backgroundColor: backgroundColor
+            height: 10, display: "flex", border: `1px solid ${data.color}`, backgroundColor: backgroundColor,
+            marginLeft: marginPerLevel * level,
         }}/>
     )
 }
