@@ -4,7 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
 import {ItemTypes} from "../../drag/item-types.const";
 import {BlockTransfer} from "../../drag/block-transfer.type";
-import {putBeforeAndSetSibling, setParent} from "../../redux/data.slice";
+import {setParent} from "../../redux/data.slice";
+import {ReorderSpacing} from "../gaps/reorder-spacing";
 
 type Props = {
   id: string;
@@ -30,16 +31,10 @@ export function SquareWithChildren(props: Props) {
       dispatch(setParent({child: item.id, parent: id}))
     }
   }));
-  const [, reorderDrop] = useDrop (()=>({
-    accept: ItemTypes.BLOCK,
-    drop: (item: BlockTransfer) => {
-      console.log("reordering");
-      dispatch(putBeforeAndSetSibling({target: item.id, before: id}));
-    }
-  }));
+
   return (
     <div>
-      <div ref={reorderDrop} style={{height: 10, display: "flex", border: '1px solid black'}}/>
+      <ReorderSpacing id={id}/>
       <div ref={drop}>
         <div ref={drag}>
           <StyledSquare level={level} id={id} {...data}/>
