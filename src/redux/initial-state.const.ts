@@ -28,7 +28,7 @@ export const initialBlockState = {
     blocks: initialBlockLookup,
     isChildren: initialChildLookup,
     childrenOrder: initialChildOrder,
-    findParent: initialParentLookup
+    findParent: initialParentLookup,
 };
 
 export type BlockSliceType = typeof initialBlockState;

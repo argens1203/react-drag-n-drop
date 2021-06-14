@@ -4,7 +4,7 @@ export type Props = {
     height?: number;
 }
 
-export function Block(props: Props) {
+export function FluidRectangle(props: Props) {
     const {color = 'grey', height = 100, style = {}} = props;
     return (
         <div style={{backgroundColor: color, height, ...style}}/>

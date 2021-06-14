@@ -2,8 +2,6 @@ import {createSlice} from "@reduxjs/toolkit";
 import {BlockSliceType, initialBlockState, ParentLookup} from "./initial-state.const";
 import {Block} from "./block.entity";
 import {ROOT_ID} from "./root-id.const";
-import {RootState} from "./store";
-import {log} from "util";
 
 const dataSlice = createSlice({
     name: 'data',
@@ -103,6 +101,7 @@ function addParent(state: BlockSliceType, child: string, parent: string){
     }
     state.isChildren[parent][child] = true;
     state.findParent[child] = parent;
+    state.blocks[child].level = (state.blocks?.[parent]?.level ?? -1) + 1; //TODO
     if (!state.childrenOrder[parent].includes(child)){
         state.childrenOrder[parent].push(child);
     }

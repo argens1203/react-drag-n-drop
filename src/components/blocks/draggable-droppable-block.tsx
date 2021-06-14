@@ -1,34 +1,38 @@
-import {DraggableBlock} from "./draggable-block";
+import React from "react";
 import {useDrop} from "react-dnd";
+import {DraggableBlock} from "./draggable-block";
 import {ItemTypes} from "../../drag/item-types.const";
 import {BlockTransfer} from "../../drag/block-transfer.type";
 import {setParent} from "../../redux/data.slice";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../redux/store";
+import {useDispatch} from "react-redux";
+import { Hoverable } from "./block-display";
 
-type Props = {
+interface Block {
     id: string;
-    level: number;
 }
 
-export function DraggableDroppableBlock (props: Props){
-    const {id, level} = props;
-    const data = useSelector((state: RootState) => state.block.blocks[id]) || {};
-    const dispatch = useDispatch();
-    const [dropProps, drop] = useDrop(() => ({
-        accept: ItemTypes.BLOCK,
-        drop: (item: BlockTransfer) => {
-            dispatch(setParent({child: item.id, parent: id}))
-        },
-        collect: (monitor) => ({
-            hovered: monitor.isOver(),
-            canDrop: monitor.canDrop(),
-        }),
-        canDrop: (item) => item.id !== id,
-    }));
-    return (
-        <div ref={drop}>
-            <DraggableBlock level={level} id={id} {...data} {...dropProps}/>
-        </div>
-    )
+function withDropzone(){
+    return function (InnerComponent: React.ComponentType<Block & Hoverable>){
+        return function (props: Block){
+            const dispatch = useDispatch();
+            const [dropProps, drop] = useDrop(() => ({
+                accept: ItemTypes.BLOCK,
+                drop: (item: BlockTransfer) => {
+                    dispatch(setParent({child: item.id, parent: props.id}))
+                },
+                collect: (monitor) => ({
+                    hovered: monitor.isOver(),
+                    canDrop: monitor.canDrop(),
+                }),
+                canDrop: (item) => item.id !== props.id,
+            }));
+            return (
+                <div ref={drop}>
+                    <InnerComponent {...dropProps} {...props}/>
+                </div>
+            )
+        }
+    }
 }
+
+export const DraggableDroppableBlock = withDropzone()(DraggableBlock);

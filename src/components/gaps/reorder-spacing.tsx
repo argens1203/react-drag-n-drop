@@ -5,7 +5,7 @@ import {BlockTransfer} from "../../drag/block-transfer.type";
 import {putBeforeAndSetSibling} from "../../redux/data.slice";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
-import { marginPerLevel } from "../blocks/margin-per-level.const";
+import {marginPerLevel} from "../blocks/margin-per-level.const";
 
 export type Props = {
     id: string;
@@ -13,8 +13,9 @@ export type Props = {
 };
 
 export function ReorderSpacing(props: Props) {
-    const {id, level = 0} = props;
+    const {id} = props;
     const data = useSelector((state: RootState) => state.block.blocks[id]) || {};
+    const {level = 0} = data;
     const dispatch = useDispatch();
     const [collectedProps, reorderDrop] = useDrop(() => ({
         accept: ItemTypes.BLOCK,
