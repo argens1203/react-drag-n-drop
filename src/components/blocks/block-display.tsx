@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
-import {FluidRectangle} from "../squares/fluid-rectangle";
 import {marginPerLevel} from "./margin-per-level.const";
+import React, {ForwardedRef} from "react";
 
 export interface Hoverable {
     hovered: boolean;
@@ -12,13 +12,14 @@ interface Props extends Hoverable {
     id: string;
 }
 
-export function BlockDisplay(props: Props) {
+export const BlockDisplay = React.forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>) => {
     const {id, hovered, canDrop} = props;
     const data = useSelector((state: RootState) => state.block.blocks[id]) || {};
     const {color, level = 0} = data;
     const marginLeft = level * marginPerLevel;
     const opacity = hovered && canDrop ? 0.5 : 1;
+    const flex =1;
     return (
-        <FluidRectangle color={color} style={{marginLeft, opacity}}/>
+        <div ref={ref} style={{backgroundColor: color, height: 100, width: 200, marginLeft, opacity, flex}}/>
     )
-}
+})
