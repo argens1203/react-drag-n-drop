@@ -7,10 +7,12 @@ import { Provider } from 'react-redux';
 import {store} from "./redux/store";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+// import { TouchBackend } from 'react-dnd-touch-backend';
 
 ReactDOM.render(
   <React.StrictMode>
   <Provider store={store}>
+    {/*<DndProvider backend={TouchBackend}>*/}
     <DndProvider backend={HTML5Backend}>
       <App />
     </DndProvider>
