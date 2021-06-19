@@ -34,24 +34,28 @@ export function Block(props: BlockData) {
         setStartX(null);
         setX(null);
     }
-    let marginRight = 0;
+    let translate = 0;
     if (x){
         if (startX){
-            marginRight = startX - x;
-            console.log(marginRight);
+            translate = startX - x;
+            console.log(translate);
         }
     }
     return (
         <>
             <Box flexDirection={'column'} display={'flex'} flex={1} alignItems={'stretch'}>
                 <ReorderSpacing id={id}/>
-                <div ref={ref} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp}
+                <div ref={ref}
+                     onMouseDown={onMouseDown}
+                     onMouseMove={onMouseMove}
+                     onMouseUp={onMouseUp}
                      onMouseLeave={onMouseUp}
-                     style={{marginRight}}>
-                    <Box flexDirection={'row'} display={'flex'} alignItems={'center'} position={'relative'} style={{border: `1px solid ${color}`}}>
+                style={{position: 'relative'}}>
+                    <Box flexDirection={'row'} display={'flex'} alignItems={'center'} position={'relative'} style={{border: `1px solid ${color}`, transform: `translateX(-${translate}px)`}}>
                         <BlockDragHandle id={id}/>
                         <DroppableBlock id={id}/>
                     </Box>
+                    <div style={{backgroundColor: 'pink', height: '100%', width: '100%', position: 'absolute', left: 0, top: 0, zIndex:-1}}/>
                 </div>
             </Box>
             {children.map((id) => <Block key={id} id={id}/>)}
