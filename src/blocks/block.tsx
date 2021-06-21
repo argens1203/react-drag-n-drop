@@ -8,6 +8,7 @@ import {BlockDragHandle} from "./block-drag-handle";
 import {BlockData} from './interfaces/block-data.interface';
 import {useDrag} from "react-dnd";
 import {ItemTypes} from "../drag/item-types.const";
+import { DeletableBackground } from "./deletable-background";
 
 export function Block(props: BlockData) {
     const {id} = props;
@@ -55,7 +56,7 @@ export function Block(props: BlockData) {
                         <BlockDragHandle id={id}/>
                         <DroppableBlock id={id}/>
                     </Box>
-                    <div style={{backgroundColor: 'pink', height: '100%', width: '100%', position: 'absolute', left: 0, top: 0, zIndex:-1}}/>
+                    <DeletableBackground/>
                 </div>
             </Box>
             {children.map((id) => <Block key={id} id={id}/>)}
