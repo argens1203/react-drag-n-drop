@@ -9,26 +9,26 @@ type Props = {
 export function DragDeletable(props: Props) {
     const [listeners, dragContext] = useDragHook();
     const {onMouseDown, onMouseUp, onMouseMove} = listeners;
-    const {start, current} = dragContext;
+    const {translate, isDragging} = dragContext;
 
     const [width, setWidth] = useState<number | undefined>();
     const ref = createRef<HTMLDivElement>();
-
+    console.log('rerending');
     useEffect(() => {
+        console.log('new width');
         setWidth(ref.current?.offsetWidth);
     }, [ref, ref.current])
 
-    let translate = 0;
-    if (current) {
-        if (start) {
-            translate = start - current;
+    const [passedThreshold, setPassedThreshold] = useState(false);
+    useEffect(() => {
+        if (isDragging) {
+            if (translate && width) {
+                setPassedThreshold(-translate / width > 0.25);
+            }
         }
-    }
+    }, [translate, width, isDragging])
 
-    let passedThreshold = false;
-    if (translate && width) {
-        passedThreshold = translate / width > 0.25;
-    }
+    const transform = passedThreshold && !isDragging ? 'translateX(-1000%)' : `translateX(${translate}px)`;
 
     return (
         <div ref={ref}
@@ -37,7 +37,7 @@ export function DragDeletable(props: Props) {
              onMouseUp={onMouseUp}
              onMouseLeave={onMouseUp}
              style={{position: 'relative'}}>
-            <div style={{transform: `translateX(-${translate}px)`}}>
+            <div style={{transform}}>
                 {props.children}
             </div>
             <DeletableBackground passedThreshold={passedThreshold}/>
