@@ -6,9 +6,8 @@ import {ReorderSpacing} from "./reorder-spacing";
 import {DroppableBlock} from "./droppable-block";
 import {BlockDragHandle} from "./block-drag-handle";
 import {BlockData} from './interfaces/block-data.interface';
-import {useDrag} from "react-dnd";
-import {ItemTypes} from "../drag/item-types.const";
 import {DeletableBackground} from "./deletable-background";
+import {useDragHook} from "../drag/custom-drag.hook";
 
 export function Block(props: BlockData) {
     const {id} = props;
@@ -19,38 +18,25 @@ export function Block(props: BlockData) {
     const [width, setWidth] = useState<number | undefined>();
     const ref = createRef<HTMLDivElement>();
 
+    const [listeners, dragContext] = useDragHook();
+    const {onMouseDown, onMouseUp, onMouseMove} = listeners;
+    const {start, current} = dragContext;
+
     useEffect(() => {
         setWidth(ref.current?.offsetWidth);
     }, [ref.current])
-    const [dragging, setDragging] = useState(false);
-    const [startX, setStartX] = useState<null | number>(null);
-    const [x, setX] = useState<null | number>(null);
+
 
     let translate = 0;
-    if (x) {
-        if (startX) {
-            translate = startX - x;
+    if (current) {
+        if (start) {
+            translate = start - current;
         }
     }
 
     let passedThreshold = false;
     if (translate && width) {
         passedThreshold = translate / width > 0.25;
-    }
-
-    const onMouseDown = (e: any) => {
-        setDragging(true);
-        setStartX(e.clientX);
-    };
-    const onMouseMove = (e: any) => {
-        if (dragging) {
-            setX(e.clientX);
-        }
-    };
-    const onMouseUp = (e: any) => {
-        setDragging(false);
-        setStartX(null);
-        setX(null);
     }
 
     return (
