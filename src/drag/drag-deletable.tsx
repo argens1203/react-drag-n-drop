@@ -6,6 +6,7 @@ type Props = {
     children: React.ReactNode;
 }
 
+
 export function DragDeletable(props: Props) {
     const [listeners, dragContext] = useDragHook();
     const {onMouseDown, onMouseUp, onMouseMove} = listeners;
