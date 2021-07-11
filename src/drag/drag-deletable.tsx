@@ -4,21 +4,28 @@ import {DeletableBackground} from "../blocks/deletable-background";
 
 type Props = {
     children: React.ReactNode;
+    style?: Record<string, any>;
 }
 
-
 export function DragDeletable(props: Props) {
+    const {style = {}} = props;
     const [listeners, dragContext] = useDragHook();
     const {onMouseDown, onMouseUp, onMouseMove} = listeners;
     const {translate, isDragging} = dragContext;
 
     const [width, setWidth] = useState<number | undefined>();
     const ref = createRef<HTMLDivElement>();
-    console.log('rerending');
+
     useEffect(() => {
-        console.log('new width');
         setWidth(ref.current?.offsetWidth);
-    }, [ref, ref.current])
+        const handleResize = (e: Event) => {
+            setWidth(ref.current?.offsetWidth);
+        }
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [ref])
 
     const [passedThreshold, setPassedThreshold] = useState(false);
     useEffect(() => {
@@ -29,7 +36,7 @@ export function DragDeletable(props: Props) {
         }
     }, [translate, width, isDragging])
 
-    const transform = passedThreshold && !isDragging ? 'translateX(-1000%)' : `translateX(${translate}px)`;
+    const transform = passedThreshold && !isDragging ? 'translateX(-1000%)' : `translateX(${Math.min(translate, 0)}px)`;
 
     return (
         <div ref={ref}
@@ -37,8 +44,8 @@ export function DragDeletable(props: Props) {
              onMouseMove={onMouseMove}
              onMouseUp={onMouseUp}
              onMouseLeave={onMouseUp}
-             style={{position: 'relative'}}>
-            <div style={{transform}}>
+             style={{position: 'relative', ...style}}>
+            <div style={{transform, cursor: 'move'}}>
                 {props.children}
             </div>
             <DeletableBackground passedThreshold={passedThreshold}/>

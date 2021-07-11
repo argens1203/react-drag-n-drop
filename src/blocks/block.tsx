@@ -7,26 +7,29 @@ import {DroppableBlock} from "./droppable-block";
 import {BlockDragHandle} from "./block-drag-handle";
 import {BlockData} from './interfaces/block-data.interface';
 import { DragDeletable } from "../drag/drag-deletable";
+import {marginPerLevel} from "./constants/margin-per-level.const";
 
 export function Block(props: BlockData) {
     const {id} = props;
-    const {color} = useSelector((state: RootState) => state.block.blocks[id]) || {};
+    const {color, level = 0} = useSelector((state: RootState) => state.block.blocks[id]) || {};
     const childMap = useSelector((state: RootState) => state.block.isChildren[id]) || {};
     const childOrder = useSelector((state: RootState) => state.block.childrenOrder[id] || []);
     const children = childOrder.filter(id => childMap[id]);
+
+    const marginLeft = level * marginPerLevel;
 
     return (
         <>
             <Box flexDirection={'column'} display={'flex'} flex={1} alignItems={'stretch'}>
                 <ReorderSpacing id={id}/>
-                <DragDeletable>
+                <DragDeletable style={{marginLeft}}>
                     <Box flexDirection={'row'} display={'flex'} alignItems={'center'} position={'relative'}
                          style={{border: `1px solid ${color}`}}>
                         <BlockDragHandle id={id} style={{
                             backgroundColor: 'white',
                             alignSelf: 'stretch',
                             alignItems: 'center',
-                            display: 'flex'
+                            display: 'flex',
                         }}/>
                         <DroppableBlock id={id}/>
                     </Box>
