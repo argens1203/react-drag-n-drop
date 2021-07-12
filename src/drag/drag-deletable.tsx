@@ -5,10 +5,16 @@ import {DeletableBackground} from "../blocks/deletable-background";
 type Props = {
     children: React.ReactNode;
     style?: Record<string, any>;
+    onDelete?: () => void;
 }
 
+const DELETE_DELAY = 100;
+
 export function DragDeletable(props: Props) {
-    const {style = {}} = props;
+    const {
+        style = {}, onDelete = () => {
+        }
+    } = props;
     const [listeners, dragContext] = useDragHook();
     const {onMouseDown, onMouseUp, onMouseMove} = listeners;
     const {translate, isDragging} = dragContext;
@@ -37,6 +43,12 @@ export function DragDeletable(props: Props) {
     }, [translate, width, isDragging])
 
     const transform = passedThreshold && !isDragging ? 'translateX(-1000%)' : `translateX(${Math.min(translate, 0)}px)`;
+
+    useEffect(() => {
+        if (passedThreshold && !isDragging) {
+            setTimeout(() => onDelete(), DELETE_DELAY);
+        }
+    }, [passedThreshold, isDragging])
 
     return (
         <div ref={ref}

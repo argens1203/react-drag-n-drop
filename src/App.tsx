@@ -1,35 +1,21 @@
-import React, {useState} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {generate} from 'short-uuid';
-import {Box, Button, Container, Typography} from "@material-ui/core";
-import './App.css';
-import {putBlock, setParent} from './redux/data.slice';
+import {Button, Container} from "@material-ui/core";
 import {RootState} from "./redux/store";
-import {Block} from "./blocks/block";
 import {ROOT_ID} from "./redux/root-id.const";
-
-const initColors = ['red', 'blue', 'grey', 'green', 'yellow', 'black'];
-
+import './App.css';
+import {initBlock} from "./thunks/init-block.thunk";
+import { Block } from "./blocks/block";
 
 function App() {
   const rootLookup = useSelector((state: RootState) => state.block.isChildren[ROOT_ID]) || {};
   const rootOrder = useSelector((state: RootState) => state.block.childrenOrder[ROOT_ID]) || [];
   const rootIds = rootOrder.filter(id => rootLookup[id]);
   const dispatch = useDispatch();
-  const initBlocks = () => {
-    const getBlock = (color: string) => ({
-      id: generate(),
-      color
-    });
-    initColors.forEach(color => {
-      const block = getBlock(color);
-      dispatch(putBlock(block));
-      dispatch(setParent({child: block.id, parent: ROOT_ID}));
-    });
-  };
+
   return (
     <Container>
-      <Button onClick={initBlocks}>initBlocks</Button>
+      <Button onClick={() => {dispatch(initBlock())}}>initBlocks</Button>
       {rootIds.map(id => <Block key={id} id={id}/>)}
     </Container>
   );

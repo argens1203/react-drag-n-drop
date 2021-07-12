@@ -18,31 +18,37 @@ const dataSlice = createSlice({
         removeBlock: (state, action) => {
             const id: string = action.payload;
             delete state.blocks[id];
+            const parent = state.findParent[id];
+            if (parent){
+                detachFromOrder(state, id, parent);
+            }
+            detachParent(state, id);
         },
         setParent: (state, action) => {
             const {child, parent} = action.payload;
-            if (child === parent){
+            if (child === parent) {
                 return;
             }
-            if (child === ROOT_ID){
+            if (child === ROOT_ID) {
                 return;
             }
             setParentWithoutValidation(state, child, parent);
             detachFromOrder(state, child, parent);
-            state.childrenOrder[parent].push(child);
+            setOrder(state, parent, child);
         },
         putBeforeAndSetSibling: (state, action) => {
             const {target, before} = action.payload;
-            if (before === ROOT_ID){
+            if (before === ROOT_ID) {
                 return;
             }
-            if (target === before){
+            if (target === before) {
                 return;
             }
             const parent = state.findParent[before];
             setParentWithoutValidation(state, target, parent);
             detachFromOrder(state, target, parent);
-            state.childrenOrder[parent].splice(state.childrenOrder[parent].indexOf(before), 0, target);
+            const newIndex = state.childrenOrder[parent].indexOf(before);
+            setOrder(state, parent, target, newIndex);
         }
     }
 });
@@ -52,13 +58,22 @@ export const {putBlock, editBlock, removeBlock, setParent, putBeforeAndSetSiblin
 
 function detachFromOrder(state: BlockSliceType, child: string, parent: string) {
     const currIdx = state.childrenOrder[parent].indexOf(child);
-    if (currIdx !== -1){
+    if (currIdx !== -1) {
         state.childrenOrder[parent].splice(currIdx, 1);
     }
 }
 
-function setParentWithoutValidation(state: BlockSliceType, child: string, parent: string){
-    if (isAncestor(child, parent, state.findParent)){
+function setOrder(state: BlockSliceType, parent: string, child: string, newIndex: number = -1) {
+    if (newIndex === -1) {
+        state.childrenOrder[parent].push(child);
+    } else {
+        state.childrenOrder[parent].splice(newIndex, 0, child);
+    }
+}
+
+function setParentWithoutValidation(state: BlockSliceType, child: string, parent: string) {
+    if (isAncestor(child, parent, state.findParent)) {
+        // If intended child was a parent of intended parent
         const ancestor = child;
         const descendant = parent;
         const grandparent = state.findParent[ancestor];
@@ -66,16 +81,16 @@ function setParentWithoutValidation(state: BlockSliceType, child: string, parent
         addParent(state, descendant, grandparent);
         detachParent(state, ancestor);
         addParent(state, ancestor, descendant);
-        return;
+    } else {
+        detachParent(state, child);
+        addParent(state, child, parent);
     }
-    detachParent(state, child);
-    addParent(state, child, parent);
 }
 
-function isAncestor(ancestor: string, descendant: string, parentLookup: ParentLookup){
+function isAncestor(ancestor: string, descendant: string, parentLookup: ParentLookup) {
     let curr: string = descendant;
-    while(curr !== ROOT_ID){
-        if (curr === ancestor){
+    while (curr !== ROOT_ID) {
+        if (curr === ancestor) {
             return true;
         }
         curr = parentLookup[curr];
@@ -83,24 +98,26 @@ function isAncestor(ancestor: string, descendant: string, parentLookup: ParentLo
     return false;
 }
 
-function detachParent(state: BlockSliceType, child: string){
+// children order is retained
+function detachParent(state: BlockSliceType, child: string) {
     const prevParent = state.findParent[child];
-    if (prevParent){
+    if (prevParent) {
         state.isChildren[prevParent][child] = false;
     }
+    delete state.findParent[child];
 }
 
-function addParent(state: BlockSliceType, child: string, parent: string){
-    if (!state.isChildren[parent]){
+function addParent(state: BlockSliceType, child: string, parent: string) {
+    if (!state.isChildren[parent]) {
         state.isChildren[parent] = {};
     }
-    if (!state.childrenOrder[parent]){
+    if (!state.childrenOrder[parent]) {
         state.childrenOrder[parent] = [];
     }
     state.isChildren[parent][child] = true;
     state.findParent[child] = parent;
     state.blocks[child].level = (state.blocks?.[parent]?.level ?? -1) + 1; //TODO
-    if (!state.childrenOrder[parent].includes(child)){
+    if (!state.childrenOrder[parent].includes(child)) {
         state.childrenOrder[parent].push(child);
     }
 }
