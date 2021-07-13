@@ -4,8 +4,9 @@ import {Button, Container} from "@material-ui/core";
 import {RootState} from "./redux/store";
 import {ROOT_ID} from "./redux/root-id.const";
 import './App.css';
-import {initBlock} from "./thunks/init-block.thunk";
+import {getBlock} from "./thunks/get-block.thunk";
 import { Block } from "./blocks/block";
+import { initBlock } from "./thunks/init-block.thunk";
 
 function App() {
   const rootLookup = useSelector((state: RootState) => state.block.isChildren[ROOT_ID]) || {};
@@ -16,6 +17,7 @@ function App() {
   return (
     <Container>
       <Button onClick={() => {dispatch(initBlock())}}>initBlocks</Button>
+      <Button onClick={() => {dispatch(getBlock())}}>getBlocks</Button>
       {rootIds.map(id => <Block key={id} id={id}/>)}
     </Container>
   );

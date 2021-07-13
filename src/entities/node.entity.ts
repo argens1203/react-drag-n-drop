@@ -12,7 +12,7 @@ export class NodeEntity {
     static fromBackend(n: BackendNode) {
         const {title, meta = {}} = n;
         const {id, isEnabled} = meta;
-        if (!id || !title || !isEnabled) {
+        if (!id || !isEnabled) {
             return;
         }
         return new NodeEntity({id, title});

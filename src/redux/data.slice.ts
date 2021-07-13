@@ -90,7 +90,7 @@ function setParentWithoutValidation(state: BlockSliceType, child: string, parent
     }
 }
 
-function isAncestor(ancestor: string, descendant: string, parentLookup: ParentLookup) {
+export function isAncestor(ancestor: string, descendant: string, parentLookup: ParentLookup) {
     let curr: string = descendant;
     while (curr !== ROOT_ID) {
         if (curr === ancestor) {

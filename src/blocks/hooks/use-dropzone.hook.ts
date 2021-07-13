@@ -2,7 +2,7 @@ import {useDispatch} from "react-redux";
 import {useDrop} from "react-dnd";
 import {ItemTypes} from "../../drag/item-types.const";
 import {BlockTransfer} from "../../drag/block-transfer.type";
-import {setParent} from "../../redux/data.slice";
+import { setParent } from "../../thunks/set-parent.thunk";
 
 export function useDropzone(id: string) {
     const dispatch = useDispatch();

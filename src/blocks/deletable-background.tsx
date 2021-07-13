@@ -11,7 +11,7 @@ export function DeletableBackground(props: Props) {
     const {passedThreshold, loading} = props;
     const maxed = '2em'
     const size = passedThreshold ? maxed : '1em';
-    const style = {height: size, width: size, color: 'white', zIndex: 0}
+    const style = {height: size, width: size, color: 'white'}
     return (
         <div style={{
             backgroundColor: 'red',

@@ -1,38 +1,21 @@
-import {Dispatch} from "@reduxjs/toolkit";
-import {putBlock, resetAll, setParent} from "../redux/data.slice";
-import {getAllNodes} from "../api/nodes.api";
+import {getBlock} from "./get-block.thunk";
+import {createNode, editNode} from "../api/nodes.api";
 import {NodeEntity} from "../entities/node.entity";
-import {getRelationships} from "../api/relationships.api";
-import {RelationshipEntity} from "../entities/relationship.entity";
-import {BackendRelationship} from "../api/types/relationship.type";
-import {ROOT_ID} from "../redux/root-id.const";
+import { AppThunkDispatch } from "./thunk.type";
+
+const titles = ['from', 'to'];
 
 export function initBlock() {
-    return async function (dispatch: Dispatch) {
-        dispatch(resetAll());
-        const nodes = await getAllNodes();
-        const ids: string[] = [];
-
-        nodes.forEach((n) => {
-            const entity = NodeEntity.fromBackend(n);
-            if (entity) {
-                ids.push(entity.id);
-                dispatch(putBlock(entity))
-            }
-        })
-        const relationships = await Promise.all(ids.map(async from => [from, await getRelationships({from})]))
-        relationships.forEach(([from, rs]) => {
-            let hasParent = false;
-            rs.forEach((r: BackendRelationship) => {
-                const entity = RelationshipEntity.fromBackend(r);
-                if (entity) {
-                    dispatch(setParent({child: from, parent: entity.to}))
-                    hasParent = true;
-                }
-            })
-            if (!hasParent) {
-                dispatch(setParent({child: from, parent: ROOT_ID}))
-            }
-        })
+    return async function (dispatch: AppThunkDispatch) {
+        await Promise.all(titles.map(async (title) => {
+            return await createNode()
+                .then(res => NodeEntity.fromBackend(res)?.id)
+                .then(async (id) => {
+                    if (id) {
+                        await editNode(id, {title})
+                    }
+                })
+        }))
+        dispatch(getBlock());
     }
 }

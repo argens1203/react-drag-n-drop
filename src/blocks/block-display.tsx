@@ -14,20 +14,19 @@ export const BlockDisplay = React.forwardRef((props: Props, ref: ForwardedRef<HT
     const {title, level = 0} = data;
 
     // const marginLeft = level * marginPerLevel;
-    const opacity = hovered && canDrop ? 0.5 : 1;
+    const backgroundColor = hovered && canDrop ? 'pink' : 'white';
 
     return (
         <div ref={ref} style={{
             borderLeft: `1px solid black`,
-            backgroundColor: 'white',
+            backgroundColor,
             flex: 1,
             display: 'inline-flex',
             alignItems: 'center',
-            opacity
         }}>
             <Typography style={{margin: 10}}>
                 {title}
             </Typography>
         </div>
     )
-})
+});
