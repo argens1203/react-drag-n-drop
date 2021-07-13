@@ -16,6 +16,7 @@ export function DragDeletable(props: Props) {
         }
     } = props;
     const [listeners, dragContext] = useDragHook();
+    const[loading, setLoading] = useState(false);
     const {onMouseDown, onMouseUp, onMouseMove} = listeners;
     const {translate, isDragging} = dragContext;
 
@@ -46,6 +47,7 @@ export function DragDeletable(props: Props) {
 
     useEffect(() => {
         if (passedThreshold && !isDragging) {
+            setLoading(true);
             setTimeout(() => onDelete(), DELETE_DELAY);
         }
     }, [passedThreshold, isDragging])
@@ -60,7 +62,7 @@ export function DragDeletable(props: Props) {
             <div style={{transform, cursor: 'move'}}>
                 {props.children}
             </div>
-            <DeletableBackground passedThreshold={passedThreshold}/>
+            <DeletableBackground passedThreshold={passedThreshold} loading={loading}/>
         </div>
     )
 }

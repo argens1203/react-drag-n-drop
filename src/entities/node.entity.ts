@@ -10,9 +10,9 @@ export class NodeEntity {
     title?: string;
 
     static fromBackend(n: BackendNode) {
-        const id = n.meta?.id;
-        const title = n.title;
-        if (!id || !title) {
+        const {title, meta = {}} = n;
+        const {id, isEnabled} = meta;
+        if (!id || !title || !isEnabled) {
             return;
         }
         return new NodeEntity({id, title});

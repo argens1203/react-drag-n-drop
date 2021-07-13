@@ -1,14 +1,17 @@
 import React from "react";
 import {Delete} from "@material-ui/icons";
+import {CircularProgress} from "@material-ui/core";
 
 type Props = {
     passedThreshold: boolean;
+    loading: boolean;
 }
 
 export function DeletableBackground(props: Props) {
-    const {passedThreshold} = props;
+    const {passedThreshold, loading} = props;
     const maxed = '2em'
     const size = passedThreshold ? maxed : '1em';
+    const style = {height: size, width: size, color: 'white', zIndex: 0}
     return (
         <div style={{
             backgroundColor: 'red',
@@ -25,7 +28,9 @@ export function DeletableBackground(props: Props) {
         }}
         >
             <div style={{marginRight: maxed}}>
-                <Delete style={{height: size, width: size, color: 'white', zIndex: 0}}/>
+                {loading
+                    ? <CircularProgress variant='indeterminate' style={style}/>
+                    : <Delete style={style}/>}
             </div>
         </div>
     )
