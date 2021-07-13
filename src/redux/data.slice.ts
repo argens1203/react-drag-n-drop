@@ -19,7 +19,7 @@ const dataSlice = createSlice({
             const id: string = action.payload;
             delete state.blocks[id];
             const parent = state.findParent[id];
-            if (parent){
+            if (parent) {
                 detachFromOrder(state, id, parent);
             }
             detachParent(state, id);
@@ -49,12 +49,15 @@ const dataSlice = createSlice({
             detachFromOrder(state, target, parent);
             const newIndex = state.childrenOrder[parent].indexOf(before);
             setOrder(state, parent, target, newIndex);
+        },
+        resetAll: () => {
+            return initialBlockState;
         }
     }
 });
 
 export default dataSlice.reducer;
-export const {putBlock, editBlock, removeBlock, setParent, putBeforeAndSetSibling} = dataSlice.actions;
+export const {putBlock, editBlock, removeBlock, setParent, putBeforeAndSetSibling, resetAll} = dataSlice.actions;
 
 function detachFromOrder(state: BlockSliceType, child: string, parent: string) {
     const currIdx = state.childrenOrder[parent].indexOf(child);

@@ -9,5 +9,7 @@ export class BackendRelationship {
     @Type(() => BackendRelationshipMeta)
     meta?: BackendRelationshipMeta;
 
-    title?: string;
+    from?: string;
+
+    to?: string;
 }

@@ -1,20 +1,38 @@
-import { Dispatch } from "@reduxjs/toolkit";
-import {generate} from "short-uuid";
-import {putBlock, setParent} from "../redux/data.slice";
+import {Dispatch} from "@reduxjs/toolkit";
+import {putBlock, resetAll, setParent} from "../redux/data.slice";
+import {getAllNodes} from "../api/nodes.api";
+import {NodeEntity} from "../entities/node.entity";
+import {getRelationships} from "../api/relationships.api";
+import {RelationshipEntity} from "../entities/relationship.entity";
+import {BackendRelationship} from "../api/types/relationship.type";
 import {ROOT_ID} from "../redux/root-id.const";
 
-const initColors = ['red', 'blue', 'grey', 'green', 'yellow', 'black'];
+export function initBlock() {
+    return async function (dispatch: Dispatch) {
+        dispatch(resetAll());
+        const nodes = await getAllNodes();
+        const ids: string[] = [];
 
-export function initBlock(){
-    return function (dispatch: Dispatch){
-        const getBlock = (color: string) => ({
-            id: generate(),
-            color
-        });
-        initColors.forEach(color => {
-            const block = getBlock(color);
-            dispatch(putBlock(block));
-            dispatch(setParent({child: block.id, parent: ROOT_ID}));
-        });
+        nodes.forEach((n) => {
+            const entity = NodeEntity.fromBackend(n);
+            if (entity) {
+                ids.push(entity.id);
+                dispatch(putBlock(entity))
+            }
+        })
+        const relationships = await Promise.all(ids.map(async from => [from, await getRelationships({from})]))
+        relationships.forEach(([from, rs]) => {
+            let hasParent = false;
+            rs.forEach((r: BackendRelationship) => {
+                const entity = RelationshipEntity.fromBackend(r);
+                if (entity) {
+                    dispatch(setParent({child: from, parent: entity.to}))
+                    hasParent = true;
+                }
+            })
+            if (!hasParent) {
+                dispatch(setParent({child: from, parent: ROOT_ID}))
+            }
+        })
     }
 }
