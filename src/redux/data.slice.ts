@@ -20,7 +20,7 @@ const dataSlice = createSlice({
             delete state.blocks[id];
             const parent = state.findParent[id];
             if (parent) {
-                detachFromOrder(state, id, parent);
+                detachFromOrder(state, {child: id, parent});
             }
             detachParent(state, id);
         },
@@ -32,9 +32,9 @@ const dataSlice = createSlice({
             if (child === ROOT_ID) {
                 return;
             }
-            setParentWithoutValidation(state, child, parent);
-            detachFromOrder(state, child, parent);
-            setOrder(state, parent, child);
+            setParentWithoutValidation(state, {child, parent});
+            detachFromOrder(state, {child, parent});
+            setOrder(state, {parent, child});
         },
         putBeforeAndSetSibling: (state, action) => {
             const {target, before} = action.payload;
@@ -45,10 +45,10 @@ const dataSlice = createSlice({
                 return;
             }
             const parent = state.findParent[before];
-            setParentWithoutValidation(state, target, parent);
-            detachFromOrder(state, target, parent);
+            setParentWithoutValidation(state, {child: target, parent});
+            detachFromOrder(state, {child: target, parent});
             const newIndex = state.childrenOrder[parent].indexOf(before);
-            setOrder(state, parent, target, newIndex);
+            setOrder(state, {parent, child: target, newIndex});
         },
         resetAll: () => {
             return initialBlockState;
@@ -59,14 +59,16 @@ const dataSlice = createSlice({
 export default dataSlice.reducer;
 export const {putBlock, editBlock, removeBlock, setParent, putBeforeAndSetSibling, resetAll} = dataSlice.actions;
 
-function detachFromOrder(state: BlockSliceType, child: string, parent: string) {
+function detachFromOrder(state: BlockSliceType, input: { child: string, parent: string }) {
+    const {child, parent} = input;
     const currIdx = state.childrenOrder[parent].indexOf(child);
     if (currIdx !== -1) {
         state.childrenOrder[parent].splice(currIdx, 1);
     }
 }
 
-function setOrder(state: BlockSliceType, parent: string, child: string, newIndex: number = -1) {
+function setOrder(state: BlockSliceType, input: { parent: string, child: string, newIndex?: number }) {
+    const {newIndex = -1, parent, child} = input;
     if (newIndex === -1) {
         state.childrenOrder[parent].push(child);
     } else {
@@ -74,8 +76,9 @@ function setOrder(state: BlockSliceType, parent: string, child: string, newIndex
     }
 }
 
-function setParentWithoutValidation(state: BlockSliceType, child: string, parent: string) {
-    if (isAncestor(child, parent, state.findParent)) {
+function setParentWithoutValidation(state: BlockSliceType, input: { child: string, parent: string }) {
+    const {child, parent} = input;
+    if (isAncestor({ancestor: child, descendant: parent}, state.findParent)) {
         // If intended child was a parent of intended parent
         const ancestor = child;
         const descendant = parent;
@@ -90,9 +93,10 @@ function setParentWithoutValidation(state: BlockSliceType, child: string, parent
     }
 }
 
-export function isAncestor(ancestor: string, descendant: string, parentLookup: ParentLookup) {
+export function isAncestor(input: { ancestor: string, descendant: string }, parentLookup: ParentLookup) {
+    const {ancestor, descendant} = input;
     let curr: string = descendant;
-    while (curr !== ROOT_ID) {
+    while (curr && curr !== ROOT_ID) {
         if (curr === ancestor) {
             return true;
         }
