@@ -2,9 +2,9 @@ import reducer, {editBlock, putBlock, removeBlock, setParent} from './data.slice
 import {initialBlockState} from "./initial-state.const";
 
 describe('data slice', () => {
-    const id = 'ID-123';
+    const id = 'ID-Block';
     const color = 'red';
-    const parentId = 'ID-456';
+    const parentId = 'ID-Parent';
     const parentColor = 'white';
     const getParent = () => {
         return {id: parentId, color: parentColor};
@@ -40,22 +40,49 @@ describe('data slice', () => {
 
             expect(next.blocks).toEqual({});
         })
-        //
-        // it('should remove block that has parent', () => {
-        //     const block = getBlock();
-        //     const state = reducer(initialBlockState, putBlock(block));
-        // })
+
+        it('should remove parent related detail when removing children', () => {
+            const block = getBlock();
+            const parent = getParent();
+
+            let state = reducer(initialBlockState, putBlock(block));
+            state = reducer(state, putBlock(parent));
+            state = reducer(state, setParent({child: block.id, parent: parent.id}));
+
+            state = reducer(state, removeBlock(block.id));
+
+            expect(state.isChildren[parent.id][block.id]).toBe(false);
+            expect(state.childrenOrder[parent.id]).toEqual([]);
+            expect(state.findParent).not.toHaveProperty(block.id);
+        })
+
+        it('should remove child related detail when removing parent', () => {
+            const block = getBlock();
+            const parent = getParent();
+
+            let state = reducer(initialBlockState, putBlock(block));
+            state = reducer(state, putBlock(parent));
+            state = reducer(state, setParent({child: block.id, parent: parent.id}));
+
+            state = reducer(state, removeBlock(parent.id));
+            console.log(state);
+
+            expect(state.isChildren).not.toHaveProperty(parent.id);
+            expect(state.childrenOrder).not.toHaveProperty(parent.id);
+            expect(state.findParent).not.toHaveProperty(block.id);
+        })
     })
 
     it('should set parent', () => {
         const block = getBlock();
         const parent = getParent();
-        const state1 = reducer(initialBlockState, putBlock(block));
-        const state2 = reducer(state1, putBlock(parent));
-        const state3 = reducer(state2, setParent({child: block.id, parent: parent.id}));
+        let state = reducer(initialBlockState, putBlock(block));
+        state = reducer(state, putBlock(parent));
+        state = reducer(state, setParent({child: block.id, parent: parent.id}));
 
-        expect(state3.isChildren[parent.id][block.id]).toBe(true);
-        expect(state3.childrenOrder[parent.id]).toEqual([block.id]);
-        expect(state3.findParent[block.id]).toEqual(parent.id);
+        expect(state.isChildren[parent.id][block.id]).toBe(true);
+        expect(state.childrenOrder[parent.id]).toEqual([block.id]);
+        expect(state.findParent[block.id]).toEqual(parent.id);
     })
+
 })
