@@ -1,5 +1,5 @@
 import {getBlock} from "./get-block.thunk";
-import {createNode, editNode} from "../api/nodes.api";
+import {createNode, editNode} from "../api";
 import {NodeEntity} from "../entities/node.entity";
 import { AppThunkDispatch } from "./thunk.type";
 

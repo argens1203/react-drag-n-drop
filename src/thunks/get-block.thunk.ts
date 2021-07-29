@@ -1,7 +1,6 @@
 import {putBlock, resetAll, setParent} from "../redux/data.slice";
-import {getAllNodes} from "../api/nodes.api";
+import {getAllNodes, getRelationships} from "../api";
 import {NodeEntity} from "../entities/node.entity";
-import {getRelationships} from "../api/relationships.api";
 import {RelationshipEntity} from "../entities/relationship.entity";
 import {BackendRelationship} from "../api/types/relationship.type";
 import {ROOT_ID} from "../redux/root-id.const";

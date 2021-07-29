@@ -1,6 +1,6 @@
 import {Dispatch} from '@reduxjs/toolkit';
 import {setParent as setParentAction} from '../redux/data.slice';
-import {createRelationship} from "../api/relationships.api";
+import {createRelationship} from "../api";
 
 type Data = {
     child: string;

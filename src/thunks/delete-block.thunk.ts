@@ -1,6 +1,6 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import {removeBlock as removeBlockAction} from '../redux/data.slice';
-import {removeNode} from "../api/nodes.api";
+import {removeNode} from "../api";
 
 export function deleteBlock(id: string) {
     return async function (dispatch: Dispatch) {
