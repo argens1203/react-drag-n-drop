@@ -1,6 +1,10 @@
 import reducer, {editBlock, putBlock, removeBlock, setParent} from './data.slice';
 import {initialBlockState} from "./initial-state.const";
 
+// TODO: setup tests regarding combined reducer
+// TODO: level is not really working when fiddling parents
+// TODO: relationship depends a separate layer
+
 describe('data slice', () => {
     const id = 'ID-Block';
     const color = 'red';
