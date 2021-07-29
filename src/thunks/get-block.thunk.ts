@@ -6,6 +6,11 @@ import {BackendRelationship} from "../api/types/relationship.type";
 import {ROOT_ID} from "../redux/root-id.const";
 import {AppDispatch} from "../redux/store";
 
+async function injectRelationships(from: string): Promise<[string, BackendRelationship[]]>{
+    const relationships: BackendRelationship[] = await getRelationships({from});
+    return [from, relationships];
+}
+
 export function getBlock() {
     return async function (dispatch: AppDispatch) {
         dispatch(resetAll());
@@ -19,7 +24,7 @@ export function getBlock() {
                 dispatch(putBlock(entity))
             }
         })
-        const relationships = await Promise.all(ids.map(async from => [from, await getRelationships({from})]))
+        const relationships = await Promise.all(ids.map(injectRelationships))
         relationships.forEach(([from, rs]) => {
             let hasParent = false;
             rs.forEach((r: BackendRelationship) => {

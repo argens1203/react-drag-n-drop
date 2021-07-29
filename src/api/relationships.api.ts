@@ -17,7 +17,7 @@ class Params {
     to?: string;
 }
 
-export async function getRelationships(params: Params) {
+export async function getRelationships(params: Params): Promise<BackendRelationship[]> {
     const {from, to} = params;
     if (!from && !to) {
         return []

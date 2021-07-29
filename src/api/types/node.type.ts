@@ -4,6 +4,10 @@ import {DateTime} from 'luxon';
 import {isoStringToDateTime} from "../transformers/iso-string-to-date-time.transformer";
 
 export class BackendNodeMeta {
+    constructor(param: Partial<BackendNodeMeta> = {}) {
+        Object.assign(this, param);
+    }
+
     @Expose({name: 'updated_at'})
     @Transform(isoStringToDateTime())
     updatedAt?: DateTime;
@@ -20,6 +24,10 @@ export class BackendNodeMeta {
 }
 
 export class BackendNode {
+    constructor(param: Partial<BackendNode> = {}) {
+        Object.assign(this, param);
+    }
+
     @Type(() => BackendNodeMeta)
     meta?: BackendNodeMeta;
 
