@@ -1,5 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {initialRelationshipState} from "./initial-state.const";
+import {removeRelationshipAction} from "./actions";
+import {logger} from "../../logger";
 
 const relationshipSlice = createSlice({
     name: 'relationship',
@@ -15,6 +17,10 @@ const relationshipSlice = createSlice({
         // Does not check relationship type. Do it in thunk
         addRelationship: (state, action) => {
             const {from, to, relationship} = action.payload;
+            if (!state.lookup[relationship] || !state.reverseLookup[relationship]){
+                logger.warn('Unregistered relationship');
+                return;
+            }
 
             // Forward Lookup
             if (!state.lookup[relationship][from]) {
@@ -30,13 +36,16 @@ const relationshipSlice = createSlice({
         },
         removeRelationship: (state, action) => {
             const {from, to, relationship} = action.payload;
+            if (!relationship) return;
+            if (!from && !to) return;
 
-            if (state.lookup?.[relationship]?.[from]?.[to]){
-                state.lookup[relationship][from][to] = false;
-            }
-            if (state.reverseLookup?.[relationship]?.[to]?.[from]){
-                state.reverseLookup[relationship][to][from] = false;
-            }
+            let froms = from ? [from] : Object.keys(state.reverseLookup[relationship]?.[to] || {});
+            let tos = to ? [to] : Object.keys(state.lookup[relationship]?.[from] || {});
+            froms.forEach(from => {
+                tos.forEach(to =>{
+                    removeRelationshipAction({from, to, relationship}, state);
+                })
+            });
         },
     }
 });

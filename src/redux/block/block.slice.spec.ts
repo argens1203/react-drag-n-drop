@@ -69,7 +69,6 @@ describe('data slice', () => {
             state = reducer(state, setParent({child: block.id, parent: parent.id}));
 
             state = reducer(state, removeBlock(parent.id));
-            console.log(state);
 
             expect(state.isChildren).not.toHaveProperty(parent.id);
             expect(state.childrenOrder).not.toHaveProperty(parent.id);
