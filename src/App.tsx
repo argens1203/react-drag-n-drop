@@ -2,7 +2,7 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Container} from "@material-ui/core";
 import {RootState} from "./redux/store";
-import {ROOT_ID} from "./redux/root-id.const";
+import {ROOT_ID} from "./redux/block/root-id.const";
 import './App.css';
 import {getBlock} from "./thunks";
 import { Block } from "./blocks/block";

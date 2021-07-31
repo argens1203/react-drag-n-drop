@@ -1,9 +1,9 @@
-import {putBlock, resetAll, setParent} from "../redux/data.slice";
+import {putBlock, resetAll, setParent} from "../redux/block/block.slice";
 import {getAllNodes, getRelationships} from "../api";
 import {NodeEntity} from "../entities/node.entity";
 import {RelationshipEntity} from "../entities/relationship.entity";
 import {BackendRelationship} from "../api/types/relationship.type";
-import {ROOT_ID} from "../redux/root-id.const";
+import {ROOT_ID} from "../redux/block/root-id.const";
 import {AppDispatch} from "../redux/store";
 
 async function injectRelationships(from: string): Promise<[string, BackendRelationship[]]>{

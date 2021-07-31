@@ -3,8 +3,8 @@ import {BlockSliceType, initialBlockState, ParentLookup} from "./initial-state.c
 import {Block} from "./block.entity";
 import {ROOT_ID} from "./root-id.const";
 
-const dataSlice = createSlice({
-    name: 'data',
+const blockSlice = createSlice({
+    name: 'block',
     initialState: initialBlockState,
     reducers: {
         putBlock: (state, action) => {
@@ -56,8 +56,8 @@ const dataSlice = createSlice({
     }
 });
 
-export default dataSlice.reducer;
-export const {putBlock, editBlock, removeBlock, setParent, putBeforeAndSetSibling, resetAll} = dataSlice.actions;
+export default blockSlice.reducer;
+export const {putBlock, editBlock, removeBlock, setParent, putBeforeAndSetSibling, resetAll} = blockSlice.actions;
 
 function detachFromOrder(state: BlockSliceType, input: { child: string, parent: string }) {
     const {child, parent} = input;

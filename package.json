@@ -54,6 +54,8 @@
     ]
   },
   "devDependencies": {
-    "@types/luxon": "^1.27.1"
+    "@types/luxon": "^1.27.1",
+    "@types/redux-logger": "^3.0.9",
+    "redux-logger": "^3.0.6"
   }
 }

@@ -1,5 +1,5 @@
 import {Dispatch} from '@reduxjs/toolkit';
-import {putBeforeAndSetSibling as putBeforeAndSetSiblingAction} from '../redux/data.slice';
+import {putBeforeAndSetSibling as putBeforeAndSetSiblingAction} from '../redux/block/block.slice';
 
 type Data = {
     target: string;
