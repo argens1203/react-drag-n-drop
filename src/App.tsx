@@ -11,8 +11,7 @@ import {IS_PARENT} from "./constants/relationship.const";
 
 function App() {
   const rootLookup = useSelector((state: RootState) => state.relationship.lookup[IS_PARENT]?.[ROOT_ID]) || {};
-  const rootOrder = Object.entries(rootLookup).filter(([, v]) => !!v).map(([k,]) => k);
-  // const rootOrder = useSelector((state: RootState) => state.block.childrenOrder[ROOT_ID]) || [];
+  const rootOrder = useSelector((state: RootState) => state.block.order || []);
   const rootIds = rootOrder.filter(id => rootLookup[id]);
   const dispatch = useDispatch();
 

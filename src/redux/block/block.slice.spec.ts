@@ -39,5 +39,30 @@ describe('data slice', () => {
         state = reducer(state, removeBlock(id));
 
         expect(state.blocks).toEqual({});
+    });
+
+    describe('ordering', () => {
+        it('should work on putting blocks', () =>{
+            let state = reducer(initialBlockState, putBlock({id: 'id', priority: 1}));
+            state = reducer(state, putBlock({id: 'another', priority: 2}));
+
+            expect(state.order).toEqual(['another', 'id']);
+        });
+
+        it('should work on editing blocks', () => {
+            let state = reducer(initialBlockState, putBlock({id: 'id', priority: 1}));
+            state = reducer(state, putBlock({id: 'another', priority: 2}));
+            state = reducer(state, editBlock({id: 'id', priority: 3}));
+
+            expect(state.order).toEqual(['id', 'another']);
+        });
+
+        it('should work on removing blocks', () => {
+            let state = reducer(initialBlockState, putBlock({id: 'id', priority: 1}));
+            state = reducer(state, putBlock({id: 'another', priority: 2}));
+
+            state = reducer(state, removeBlock('id'));
+            expect(state.order).toEqual(['another']);
+        })
     })
 })
