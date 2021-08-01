@@ -28,7 +28,7 @@ export function Block(props: Props) {
     return (
         <>
             <Box flexDirection={'column'} display={'flex'} flex={1} alignItems={'stretch'}>
-                <ReorderSpacing id={id}/>
+                <ReorderSpacing id={id} level={level}/>
                 <DragDeletable style={{marginLeft}} onDelete={() => dispatch(deleteBlock(id))}>
                     <Box flexDirection={'row'} display={'flex'} alignItems={'center'} position={'relative'}
                          style={{border: `1px solid black`}}>

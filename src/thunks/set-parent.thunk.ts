@@ -1,6 +1,6 @@
-import {Dispatch} from '@reduxjs/toolkit';
-import {addRelationship} from "../redux/relationship/relationship.slice";
+import {addRelationship, removeRelationship} from "../redux/relationship/relationship.slice";
 import {IS_PARENT} from "../constants/relationship.const";
+import {AppThunkDispatch, AppThunkGetState} from "./thunk.type";
 
 type Data = {
     child: string;
@@ -8,8 +8,9 @@ type Data = {
 }
 
 export function setParent(data: Data) {
-    return async function (dispatch: Dispatch) {
+    return async function (dispatch: AppThunkDispatch, getState: AppThunkGetState) {
         const {child, parent} = data;
+        dispatch(removeRelationship({to: child, relationship: IS_PARENT}));
         dispatch(addRelationship({from: parent, to: child, relationship: IS_PARENT}));
     }
 }

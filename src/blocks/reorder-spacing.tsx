@@ -5,10 +5,13 @@ import {marginPerLevel} from "./constants/margin-per-level.const";
 import {BlockData} from "./interfaces/block-data.interface";
 import {useReorderDropzone} from "./hooks/use-reorder-dropzone.book";
 
-export function ReorderSpacing(props: BlockData) {
-    const {id} = props;
+interface Props extends BlockData {
+    level: number;
+}
+
+export function ReorderSpacing(props: Props) {
+    const {id, level} = props;
     const data = useSelector((state: RootState) => state.block.blocks[id]) || {};
-    const {level = 0} = data;
     const [collectedProps, ref] = useReorderDropzone(id);
     const {hovered, canDrop} = collectedProps;
     let backgroundColor = 'transparent';

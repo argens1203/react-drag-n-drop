@@ -11,7 +11,7 @@ interface Props extends Hoverable, BlockData {
 export const BlockDisplay = React.forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>) => {
     const {id, hovered, canDrop} = props;
     const data = useSelector((state: RootState) => state.block.blocks[id]) || {};
-    const {title, level = 0} = data;
+    const {title} = data;
 
     // const marginLeft = level * marginPerLevel;
     const backgroundColor = hovered && canDrop ? 'pink' : 'white';
