@@ -1,91 +1,43 @@
-import reducer, {editBlock, putBlock, removeBlock, setParent} from './block.slice';
+import reducer, {editBlock, putBlock, removeBlock} from './block.slice';
 import {initialBlockState} from "./initial-state.const";
-
-// TODO: setup tests regarding combined reducer
-// TODO: level is not really working when fiddling parents
-// TODO: relationship depends a separate layer
+import {AnyAction} from "@reduxjs/toolkit";
 
 describe('data slice', () => {
-    const id = 'ID-Block';
-    const color = 'red';
-    const parentId = 'ID-Parent';
-    const parentColor = 'white';
-    const getParent = () => {
-        return {id: parentId, color: parentColor};
-    }
-    const getBlock = () => {
-        return {id, color};
-    }
     it('should initialise', () => {
-        expect(reducer(undefined, {})).toEqual(initialBlockState);
+        expect(reducer(undefined, {} as AnyAction)).toEqual(initialBlockState);
     });
 
-    it('should put block', () => {
-        const block = getBlock();
+    it('can put block', () => {
+        const id = 'id';
+        const block = {id, color: 'color'};
         const nextState = reducer(initialBlockState, putBlock(block));
 
         expect(nextState.blocks[id]).toEqual(block);
     });
 
-    it('should edit block ', () => {
-        const block = getBlock();
-        const color = 'blue'
-        const state = reducer(initialBlockState, putBlock(block));
-        const nextState = reducer(state, editBlock({id, color}))
+    it('can edit block ', () => {
+        const id = 'id';
+        let state = reducer(initialBlockState, putBlock({id, color: 'color'}));
+        state = reducer(state, editBlock({id, color: 'new color'}))
 
-        expect(nextState.blocks[id].color).toEqual(color);
+        expect(state.blocks[id].color).toEqual('new color');
+    });
 
-    })
-    describe('remove block', () => {
-        it('should remove block ', () => {
-            const block = getBlock();
-            const state = reducer(initialBlockState, putBlock(block));
-            const next = reducer(state, removeBlock(id));
+    it('can do partial edit ', () => {
+        const id = 'id';
+        let state = reducer(initialBlockState, putBlock({id, color: 'color', title: 'title'}));
+        state = reducer(state, editBlock({id, color: 'new color'}))
 
-            expect(next.blocks).toEqual({});
-        })
+        expect(state.blocks[id].color).toEqual('new color');
+        expect(state.blocks[id].title).toEqual('title');
+    });
 
-        it('should remove parent related detail when removing children', () => {
-            const block = getBlock();
-            const parent = getParent();
-
-            let state = reducer(initialBlockState, putBlock(block));
-            state = reducer(state, putBlock(parent));
-            state = reducer(state, setParent({child: block.id, parent: parent.id}));
-
-            state = reducer(state, removeBlock(block.id));
-
-            expect(state.isChildren[parent.id][block.id]).toBe(false);
-            expect(state.childrenOrder[parent.id]).toEqual([]);
-            expect(state.findParent).not.toHaveProperty(block.id);
-        })
-
-        it.skip('should remove child related detail when removing parent', () => {
-            const block = getBlock();
-            const parent = getParent();
-
-            let state = reducer(initialBlockState, putBlock(block));
-            state = reducer(state, putBlock(parent));
-            state = reducer(state, setParent({child: block.id, parent: parent.id}));
-
-            state = reducer(state, removeBlock(parent.id));
-
-            expect(state.isChildren).not.toHaveProperty(parent.id);
-            expect(state.childrenOrder).not.toHaveProperty(parent.id);
-            expect(state.findParent).not.toHaveProperty(block.id);
-        })
-    })
-
-    it('should set parent', () => {
-        const block = getBlock();
-        const parent = getParent();
+    it('can remove block ', () => {
+        const id = 'id';
+        const block = {id, title: 'meh'}
         let state = reducer(initialBlockState, putBlock(block));
-        state = reducer(state, putBlock(parent));
-        state = reducer(state, setParent({child: block.id, parent: parent.id}));
+        state = reducer(state, removeBlock(id));
 
-        expect(state.isChildren[parent.id][block.id]).toBe(true);
-        expect(state.childrenOrder[parent.id]).toEqual([block.id]);
-        expect(state.findParent[block.id]).toEqual(parent.id);
+        expect(state.blocks).toEqual({});
     })
-
 })

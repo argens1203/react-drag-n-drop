@@ -32,4 +32,6 @@ export class BackendNode {
     meta?: BackendNodeMeta;
 
     title?: string;
+
+    priority?: number;
 }

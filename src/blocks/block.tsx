@@ -9,13 +9,15 @@ import {BlockData} from './interfaces/block-data.interface';
 import {DragDeletable} from "../drag/drag-deletable";
 import {marginPerLevel} from "./constants/margin-per-level.const";
 import {deleteBlock} from "../thunks/delete-block.thunk";
+import {IS_PARENT} from "../constants/relationship.const";
 
 export function Block(props: BlockData) {
     const {id} = props;
     const dispatch = useDispatch();
     const {color, level = 0} = useSelector((state: RootState) => state.block.blocks[id]) || {};
-    const childMap = useSelector((state: RootState) => state.block.isChildren[id]) || {};
-    const childOrder = useSelector((state: RootState) => state.block.childrenOrder[id] || []);
+    const childMap = useSelector((state: RootState) => state.relationship.lookup[IS_PARENT]?.[id]) || {};
+    const childOrder = Object.entries(childMap).filter(([, v]) => !!v).map(([k,]) => k);
+    // const childOrder = useSelector((state: RootState) => state.block.childrenOrder[id] || []);
     const children = childOrder.filter(id => childMap[id]);
 
     const marginLeft = level * marginPerLevel;

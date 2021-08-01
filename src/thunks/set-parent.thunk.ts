@@ -1,6 +1,6 @@
 import {Dispatch} from '@reduxjs/toolkit';
-import {setParent as setParentAction} from '../redux/block/block.slice';
-import {createRelationship} from "../api";
+import {addRelationship} from "../redux/relationship/relationship.slice";
+import {IS_PARENT} from "../constants/relationship.const";
 
 type Data = {
     child: string;
@@ -10,11 +10,6 @@ type Data = {
 export function setParent(data: Data) {
     return async function (dispatch: Dispatch) {
         const {child, parent} = data;
-        dispatch(setParentAction({child, parent}));
-        // TODO: different relationship?
-        // await createRelationship(child, parent)
-        //     .then((res) => {
-        //         dispatch(setParentAction({child, parent}));
-        //     })
+        dispatch(addRelationship({from: parent, to: child, relationship: IS_PARENT}));
     }
 }
