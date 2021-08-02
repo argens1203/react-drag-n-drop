@@ -1,5 +1,5 @@
 import {NodeEntity} from "./node.entity";
-import {BackendNode, BackendNodeMeta} from "../types/node.type";
+import {BackendNode, BackendNodeMeta} from "./node-backend.entity";
 
 describe('node entity', () => {
     it('from backend', () => {

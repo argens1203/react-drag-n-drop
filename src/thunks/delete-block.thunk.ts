@@ -1,7 +1,7 @@
 import {removeBlock as removeBlockAction} from '../middleware/nodes/slice/block.slice';
 import {AppThunkDispatch, AppThunkGetState} from "./thunk.type";
-import {IS_PARENT} from "../middleware/relationships/constants/relationship.const";
-import {removeRelationship} from "../middleware/relationships/slices/relationship.slice";
+import {IS_PARENT} from "../middleware/relationships/constants";
+import {removeRelationship} from "../middleware/relationships/slice";
 import {setParent} from "./set-parent.thunk";
 import {getParent} from "../middleware/relationships/utils/get-parent.action";
 

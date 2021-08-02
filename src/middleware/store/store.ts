@@ -1,9 +1,10 @@
 import blockReducer from "../nodes/slice/block.slice";
-import relationshipReducer from '../relationships/slices/relationship.slice';
+import relationshipReducer from '../relationships/slice/relationship.slice';
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import logger from 'redux-logger';
 
+// TODO: rename to Node
 export const reducer = combineReducers({block: blockReducer, relationship: relationshipReducer});
 export const store = configureStore({
     reducer: reducer,

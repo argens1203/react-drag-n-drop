@@ -1,6 +1,6 @@
 import axios from "axios";
 import {BASE_URL} from "../../../config";
-import {BackendNode} from "../types/node.type";
+import {BackendNode} from "../entities";
 import {deserialize} from "class-transformer";
 
 export async function getAllNodes(): Promise<BackendNode[]> {

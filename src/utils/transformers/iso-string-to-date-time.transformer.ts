@@ -1,5 +1,5 @@
 import {DateTime} from "luxon";
-import {toTransformer} from "../hof/to-transformer.hof";
+import {toTransformer} from "../hof";
 
 export function isoStringToDateTime() {
     return toTransformer((s: string) => {

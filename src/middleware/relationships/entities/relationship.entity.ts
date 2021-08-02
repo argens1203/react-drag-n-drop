@@ -1,4 +1,4 @@
-import {BackendRelationship} from "../types/relationship.type";
+import {BackendRelationship} from "./relationship-backend.entity";
 
 export class RelationshipEntity {
     constructor(input: Partial<RelationshipEntity> = {}) {

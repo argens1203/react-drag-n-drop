@@ -1,4 +1,4 @@
-import {BackendNode, BackendNodeMeta} from "../types/node.type";
+import {BackendNode, BackendNodeMeta} from "../entities";
 import {DateTime} from "luxon";
 import {generate} from 'short-uuid';
 

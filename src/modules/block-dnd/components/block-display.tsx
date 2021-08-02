@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux";
 import {RootState} from "../../../middleware/store/store";
 import React, {ForwardedRef} from "react";
-import {Hoverable} from "../../../components/hoverable/interfaces/hoverable.interface";
+import {Hoverable} from "../../../components/hoverable/interfaces";
 import {BlockTransferData} from "../interfaces";
 import {Typography} from "@material-ui/core";
 

@@ -1,4 +1,4 @@
-import {RelationshipSliceType} from "../constants/initial-state.const";
+import {RelationshipSliceType} from "../slice";
 
 type Params = {
     relationship: string;
@@ -6,7 +6,7 @@ type Params = {
     to: string;
 }
 
-export function removeRelationshipAction (params: Params, state: RelationshipSliceType){
+export function removeRelationshipReducer (params: Params, state: RelationshipSliceType){
     const {relationship, from, to} = params;
 
     if (state.lookup?.[relationship]?.[from]?.[to]){

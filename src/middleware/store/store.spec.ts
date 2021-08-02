@@ -1,7 +1,7 @@
 import {reducer} from "./store";
 import {AnyAction} from "@reduxjs/toolkit";
-import {initialBlockState} from "../nodes/constants/initial-state.const";
-import {initialRelationshipState} from "../relationships/constants/initial-state.const";
+import {initialBlockState} from "../nodes/slice";
+import {initialRelationshipState} from "../relationships/slice";
 
 describe('root store', () => {
     it('should initialise', () => {

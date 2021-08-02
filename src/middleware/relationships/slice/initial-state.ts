@@ -1,4 +1,4 @@
-import {RelationshipType} from "../enums/relationship-type.enum";
+import {RelationshipType} from "../enums";
 
 type IdLookup = {
     [id: string]: {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import {BASE_URL} from "../../../config";
 import {deserialize} from "class-transformer";
-import {BackendRelationship} from "../types/relationship.type";
+import {BackendRelationship} from "../entities";
 
 export async function createRelationship(from: string, to: string) {
     const n = await axios.post(`${BASE_URL}/relationships/belongs/from/${from}/to/${to}`).then(res => res.data.data);

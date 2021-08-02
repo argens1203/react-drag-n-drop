@@ -1,7 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {initialBlockState} from "../constants/initial-state.const";
-import {NodeEntity} from "../entities/node.entity";
+import {initialBlockState} from "./initial-state";
+import {NodeEntity} from "../entities";
 
+// TODO: rename to Node
 const blockSlice = createSlice({
     name: 'block',
     initialState: initialBlockState,

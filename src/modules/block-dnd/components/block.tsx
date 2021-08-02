@@ -6,10 +6,10 @@ import {SpacingDroppable} from "./spacing-droppable";
 import {BlockDroppable} from "./block-droppable";
 import {BlockDragHandle} from "./block-drag-handle";
 import {BlockTransferData} from '../interfaces';
-import {DragDeletable} from "../../../components/drag-deletable/drag-deletable";
+import {DragDeletable} from "../../../components/drag-deletable";
 import {marginPerLevel} from "../styles/margin-per-level.style";
 import {deleteBlock} from "../../../thunks";
-import {IS_PARENT} from "../../../middleware/relationships/constants/relationship.const";
+import {IS_PARENT} from "../../../middleware/relationships/constants";
 
 interface Props extends BlockTransferData {
     level?: number;

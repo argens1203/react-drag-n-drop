@@ -1,5 +1,5 @@
 import reducer, {editBlock, putBlock, removeBlock} from './block.slice';
-import {initialBlockState} from "../constants/initial-state.const";
+import {initialBlockState} from "./initial-state";
 import {AnyAction} from "@reduxjs/toolkit";
 
 describe('data slice', () => {

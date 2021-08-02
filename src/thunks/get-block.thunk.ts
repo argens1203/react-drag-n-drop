@@ -1,13 +1,14 @@
-import {putBlock} from "../middleware/nodes/slice/block.slice";
-import {getAllNodes, getRelationships} from "../middleware/api";
-import {NodeEntity} from "../middleware/nodes/entities/node.entity";
-import {RelationshipEntity} from "../middleware/relationships/entities/relationship.entity";
-import {BackendRelationship} from "../middleware/relationships/types/relationship.type";
-import {ROOT_ID} from "../middleware/nodes/constants/root-id.const";
+import {putBlock} from "../middleware/nodes/slice";
+import {getRelationships} from "../middleware/relationships/api";
+import {getAllNodes} from "../middleware/nodes/api";
+import {NodeEntity} from "../middleware/nodes/entities";
+import {RelationshipEntity} from "../middleware/relationships/entities";
+import {BackendRelationship} from "../middleware/relationships/entities";
+import {ROOT_ID} from "../middleware/nodes/constants";
 import {AppDispatch} from "../middleware/store/store";
-import {addRelationship, registerRelationship} from "../middleware/relationships/slices/relationship.slice";
-import {IS_PARENT} from "../middleware/relationships/constants/relationship.const";
-import {RelationshipType} from "../middleware/relationships/enums/relationship-type.enum";
+import {addRelationship, registerRelationship} from "../middleware/relationships/slice";
+import {IS_PARENT} from "../middleware/relationships/constants";
+import {RelationshipType} from "../middleware/relationships/enums";
 
 async function injectRelationships(from: string): Promise<[string, BackendRelationship[]]> {
     const relationships: BackendRelationship[] = await getRelationships({from});

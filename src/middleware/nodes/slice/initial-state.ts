@@ -1,10 +1,8 @@
-import {NodeEntity} from "../entities/node.entity";
+import {NodeEntity} from "../entities";
 
-type BlockLookup = {
+const initialBlockLookup: {
     [id: string]: NodeEntity;
-}
-
-const initialBlockLookup: BlockLookup = {};
+} = {};
 
 const initialCompareFn: (b1: NodeEntity, b2: NodeEntity) => number = (b1, b2) => {
     if (!b1.importance && !b2.importance) return 0;
@@ -24,4 +22,5 @@ export const initialBlockState = {
     order: initialOrder,
 };
 
+// TODO: rename to Node
 export type BlockSliceType = typeof initialBlockState;

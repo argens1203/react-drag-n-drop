@@ -1,4 +1,4 @@
-import {BackendNode} from "../types/node.type";
+import {BackendNode} from "./node-backend.entity";
 
 export class NodeEntity {
     constructor(input: Partial<NodeEntity> = {}) {

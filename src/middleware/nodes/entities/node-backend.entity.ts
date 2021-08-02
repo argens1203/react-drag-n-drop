@@ -1,7 +1,7 @@
 import {Expose, Transform, Type} from "class-transformer";
 import {IsDefined} from "class-validator";
 import {DateTime} from 'luxon';
-import {isoStringToDateTime} from "../../api/transformers/iso-string-to-date-time.transformer";
+import {isoStringToDateTime} from "../../../utils";
 
 export class BackendNodeMeta {
     constructor(param: Partial<BackendNodeMeta> = {}) {

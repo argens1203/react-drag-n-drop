@@ -1,5 +1,5 @@
-import {addRelationship, removeRelationship} from "../middleware/relationships/slices/relationship.slice";
-import {IS_PARENT} from "../middleware/relationships/constants/relationship.const";
+import {addRelationship, removeRelationship} from "../middleware/relationships/slice";
+import {IS_PARENT} from "../middleware/relationships/constants";
 import {AppThunkDispatch, AppThunkGetState} from "./thunk.type";
 
 type Data = {

@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {initialRelationshipState} from "../constants/initial-state.const";
-import {removeRelationshipAction} from "../reducers/remove-relationship.action";
+import {initialRelationshipState} from "./initial-state";
+import {removeRelationshipReducer} from "../reducers";
 import {logger} from "../../../logger";
 
 const relationshipSlice = createSlice({
@@ -43,7 +43,7 @@ const relationshipSlice = createSlice({
             let tos = to ? [to] : Object.keys(state.lookup[relationship]?.[from] || {});
             froms.forEach(from => {
                 tos.forEach(to =>{
-                    removeRelationshipAction({from, to, relationship}, state);
+                    removeRelationshipReducer({from, to, relationship}, state);
                 })
             });
         },

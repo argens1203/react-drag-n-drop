@@ -1,6 +1,6 @@
 import reducer, {addRelationship, registerRelationship, removeRelationship} from './relationship.slice';
-import {initialRelationshipState} from "../constants/initial-state.const";
-import {RelationshipType} from "../enums/relationship-type.enum";
+import {initialRelationshipState} from "./initial-state";
+import {RelationshipType} from "../enums";
 import {AnyAction} from "@reduxjs/toolkit";
 
 describe('relationship slice', () => {

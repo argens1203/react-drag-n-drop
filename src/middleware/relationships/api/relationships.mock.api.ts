@@ -1,4 +1,4 @@
-import {BackendRelationship} from "../types/relationship.type";
+import {BackendRelationship} from "../entities";
 
 export async function createRelationship(from: string, to: string): Promise<void> {
     return;

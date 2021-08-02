@@ -1,5 +1,5 @@
 import {Type} from "class-transformer";
-import {BackendNodeMeta} from "../../nodes/types/node.type";
+import {BackendNodeMeta} from "../../nodes/entities";
 
 class BackendRelationshipMeta extends BackendNodeMeta {
     rank?: number;

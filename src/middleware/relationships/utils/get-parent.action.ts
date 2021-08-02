@@ -1,4 +1,4 @@
-import {IS_PARENT} from "../constants/relationship.const";
+import {IS_PARENT} from "../constants";
 import {RootState} from "../../store/store";
 
 export function getParent(child: string, state: RootState) {
