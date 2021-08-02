@@ -1,7 +1,7 @@
 import {AppThunkDispatch, AppThunkGetState} from "./thunk.type";
 import {setOrderBefore} from "./set-order-before.thunk";
 import {setParent} from "./set-parent.thunk";
-import {getParent} from "../middleware/relationships/utils/get-parent.action";
+import {getParent} from "../middleware/relationships/utils";
 
 type Data = {
     target: string;
@@ -13,7 +13,7 @@ export function putBeforeAndSetSibling(data: Data) {
         const {target, before} = data;
         if (!target || !before) return;
         const state = getState();
-        const parent = getParent(before, state);
+        const parent = getParent(before, state.relationship);
         dispatch(setOrderBefore({target, before}));
         dispatch(setParent({parent, child: target}));
     }
