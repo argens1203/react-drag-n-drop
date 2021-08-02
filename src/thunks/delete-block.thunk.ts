@@ -1,9 +1,9 @@
-import {removeBlock as removeBlockAction} from '../redux/block/block.slice';
+import {removeBlock as removeBlockAction} from '../middleware/nodes/slice/block.slice';
 import {AppThunkDispatch, AppThunkGetState} from "./thunk.type";
-import {IS_PARENT} from "../constants/relationship.const";
-import {removeRelationship} from "../redux/relationship/relationship.slice";
+import {IS_PARENT} from "../middleware/relationships/constants/relationship.const";
+import {removeRelationship} from "../middleware/relationships/slices/relationship.slice";
 import {setParent} from "./set-parent.thunk";
-import {getParent} from "../utils/get-parent.action";
+import {getParent} from "../middleware/relationships/utils/get-parent.action";
 
 export function deleteBlock(id: string) {
     return async function (dispatch: AppThunkDispatch, getState: AppThunkGetState) {

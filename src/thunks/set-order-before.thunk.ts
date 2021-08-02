@@ -1,5 +1,5 @@
 import {AppThunkDispatch, AppThunkGetState} from "./thunk.type";
-import {editBlock} from "../redux/block/block.slice";
+import {editBlock} from "../middleware/nodes/slice/block.slice";
 
 type Data = {
     target: string;

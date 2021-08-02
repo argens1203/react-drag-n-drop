@@ -2,10 +2,10 @@ import "reflect-metadata";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './modules/app/app';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux';
-import {store} from "./redux/store";
+import {store} from "./middleware/store/store";
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
 // import { TouchBackend } from 'react-dnd-touch-backend';

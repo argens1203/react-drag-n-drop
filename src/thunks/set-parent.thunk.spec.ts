@@ -1,9 +1,9 @@
 import thunk from "redux-thunk";
 import configureMockStore from 'redux-mock-store';
-import {initialRelationshipState} from "../redux/relationship/initial-state.const";
+import {initialRelationshipState} from "../middleware/relationships/constants/initial-state.const";
 import {setParent} from "./set-parent.thunk";
-import {addRelationship, removeRelationship} from "../redux/relationship/relationship.slice";
-import {IS_PARENT} from "../constants/relationship.const";
+import {addRelationship, removeRelationship} from "../middleware/relationships/slices/relationship.slice";
+import {IS_PARENT} from "../middleware/relationships/constants/relationship.const";
 
 describe('set parent', () => {
     it('should set parent correctly', () => {

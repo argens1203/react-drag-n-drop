@@ -1,5 +1,5 @@
-import {addRelationship, removeRelationship} from "../redux/relationship/relationship.slice";
-import {IS_PARENT} from "../constants/relationship.const";
+import {addRelationship, removeRelationship} from "../middleware/relationships/slices/relationship.slice";
+import {IS_PARENT} from "../middleware/relationships/constants/relationship.const";
 import {AppThunkDispatch, AppThunkGetState} from "./thunk.type";
 
 type Data = {

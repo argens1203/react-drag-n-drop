@@ -1,7 +1,7 @@
 import {AppThunkDispatch, AppThunkGetState} from "./thunk.type";
 import {setOrderBefore} from "./set-order-before.thunk";
 import {setParent} from "./set-parent.thunk";
-import {getParent} from "../utils/get-parent.action";
+import {getParent} from "../middleware/relationships/utils/get-parent.action";
 
 type Data = {
     target: string;

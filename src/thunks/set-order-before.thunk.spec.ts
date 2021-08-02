@@ -1,5 +1,5 @@
-import blockReducer, {editBlock, putBlock} from '../redux/block/block.slice';
-import {initialBlockState} from "../redux/block/initial-state.const";
+import blockReducer, {editBlock, putBlock} from '../middleware/nodes/slice/block.slice';
+import {initialBlockState} from "../middleware/nodes/constants/initial-state.const";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import {setOrderBefore} from "./set-order-before.thunk";

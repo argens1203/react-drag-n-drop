@@ -1,5 +1,5 @@
 import {AnyAction, ThunkDispatch} from "@reduxjs/toolkit";
-import {RootState} from "../redux/store";
+import {RootState} from "../middleware/store/store";
 
 export type AppThunkDispatch<E = unknown> = ThunkDispatch<RootState, E, AnyAction>;
 export type AppThunkGetState = () => RootState;

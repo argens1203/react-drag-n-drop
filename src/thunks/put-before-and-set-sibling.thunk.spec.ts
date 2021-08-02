@@ -1,15 +1,15 @@
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import {initialRelationshipState} from "../redux/relationship/initial-state.const";
+import {initialRelationshipState} from "../middleware/relationships/constants/initial-state.const";
 import {putBeforeAndSetSibling} from "./put-before-and-set-sibling.thunk";
-import {initialBlockState} from "../redux/block/initial-state.const";
-import blockReducer, {putBlock} from "../redux/block/block.slice";
+import {initialBlockState} from "../middleware/nodes/constants/initial-state.const";
+import blockReducer, {putBlock} from "../middleware/nodes/slice/block.slice";
 import relationshipReducer, {
     addRelationship,
     registerRelationship,
-} from "../redux/relationship/relationship.slice";
-import {IS_PARENT} from "../constants/relationship.const";
-import {RelationshipType} from "../redux/relationship/relationship-type.enum";
+} from "../middleware/relationships/slices/relationship.slice";
+import {IS_PARENT} from "../middleware/relationships/constants/relationship.const";
+import {RelationshipType} from "../middleware/relationships/enums/relationship-type.enum";
 import * as setOrderBeforeThunk from "./set-order-before.thunk";
 import * as setParentThunk from "./set-parent.thunk";
 

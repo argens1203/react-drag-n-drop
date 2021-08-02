@@ -1,6 +1,6 @@
 import {getBlock} from "./get-block.thunk";
-import {createNode, editNode} from "../api";
-import {NodeEntity} from "../entities/node.entity";
+import {createNode, editNode} from "../middleware/api";
+import {NodeEntity} from "../middleware/nodes/entities/node.entity";
 import { AppThunkDispatch } from "./thunk.type";
 
 const titles = ['from', 'to'];
