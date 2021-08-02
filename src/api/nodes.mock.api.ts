@@ -8,7 +8,7 @@ export async function getAllNodes(): Promise<BackendNode[]> {
     const titles = ['red', 'blue', 'yellow', 'green', 'black'];
     return titles.map((title) => {
         const meta = getMeta();
-        return new BackendNode({title, meta, priority: Math.random()})
+        return new BackendNode({title, meta, importance: Math.random()})
     })
 }
 

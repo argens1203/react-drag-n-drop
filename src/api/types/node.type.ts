@@ -33,5 +33,5 @@ export class BackendNode {
 
     title?: string;
 
-    priority?: number;
+    importance?: number;
 }

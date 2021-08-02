@@ -1,13 +1,9 @@
 import thunk from "redux-thunk";
-import configureMockStore, {MockStoreEnhanced} from 'redux-mock-store';
-import {initialBlockState} from "../redux/block/initial-state.const";
+import configureMockStore from 'redux-mock-store';
 import {initialRelationshipState} from "../redux/relationship/initial-state.const";
 import {setParent} from "./set-parent.thunk";
-import {addRelationship, registerRelationship, removeRelationship} from "../redux/relationship/relationship.slice";
+import {addRelationship, removeRelationship} from "../redux/relationship/relationship.slice";
 import {IS_PARENT} from "../constants/relationship.const";
-import relationshipReducer from "../redux/relationship/relationship.slice";
-import {child} from "winston";
-import {RelationshipType} from "../redux/relationship/relationship-type.enum";
 
 describe('set parent', () => {
     it('should set parent correctly', () => {
@@ -30,5 +26,5 @@ describe('set parent', () => {
 
         expect(store.getActions()).toContainEqual(removeRelationship({to: childId, relationship: IS_PARENT}));
         expect(store.getActions()).toContainEqual(addRelationship({from: parentId, to: childId, relationship: IS_PARENT}));
-    })
+    });
 })

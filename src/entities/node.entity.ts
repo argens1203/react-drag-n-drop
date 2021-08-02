@@ -9,14 +9,15 @@ export class NodeEntity {
 
     title?: string;
 
-    priority?: number;
+    // Higher is more important
+    importance: number = Math.random();
 
     static fromBackend(n: BackendNode) {
-        const {title, meta = {}, priority} = n;
+        const {title, meta = {}, importance} = n;
         const {id, isEnabled} = meta;
         if (!id || !isEnabled) {
             return;
         }
-        return new NodeEntity({id, title, priority});
+        return new NodeEntity({id, title, importance});
     }
 }
