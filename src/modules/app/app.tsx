@@ -17,7 +17,7 @@ function App() {
 
   return (
     <Container>
-      <Button onClick={() => {dispatch(initBlock())}}>initBlocks</Button>
+      {/*<Button onClick={() => {dispatch(initBlock())}}>initBlocks</Button>*/}
       <Button onClick={() => {dispatch(getBlock())}}>getBlocks</Button>
       {rootIds.map(id => <Block key={id} id={id}/>)}
     </Container>
