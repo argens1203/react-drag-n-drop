@@ -24,7 +24,7 @@ export function getBlock() {
             const entity = NodeEntity.fromBackend(n);
             if (entity) {
                 ids.push(entity.id);
-                dispatch(putBlock(entity))
+                dispatch(putBlock(entity));
             }
         })
 

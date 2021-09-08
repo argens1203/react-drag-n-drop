@@ -18,7 +18,8 @@ export function removeRelationship(input: RemoveRelationshipInput) {
             })
             .catch(() => {
                 // TODO: Error UI
-            }).catch(() => {
+            })
+            .finally(() => {
                 // TODO: Finish Loading UI
             });
     }

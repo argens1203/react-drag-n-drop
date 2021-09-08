@@ -11,7 +11,9 @@ const blockSlice = createSlice({
             const block: NodeEntity = action.payload;
             state.blocks[block.id] = block;
             // TODO: perf
-            state.order.push(block.id);
+            if(state.order.indexOf(block.id) === -1){
+                state.order.push(block.id);
+            }
             state.order = state.order.map(id => state.blocks[id]).sort(state.compareFn).filter(state.filterFn).map(node => node.id);
         },
         editBlock: (state, action) => {

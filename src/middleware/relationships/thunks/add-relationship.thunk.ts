@@ -18,7 +18,8 @@ export function addRelationship(input: AddRelationshipInput){
             })
             .catch(() => {
                 // TODO: Error UI
-            }).catch(() => {
+            })
+            .finally(() => {
                 // TODO: Finish Loading UI
             });
     }
