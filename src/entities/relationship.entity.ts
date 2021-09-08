@@ -17,10 +17,6 @@ export class RelationshipEntity {
     static fromBackend(n: BackendRelationship) {
         const {meta = {}, from, to} = n;
         const {id, rank} = meta;
-        console.log('id', id);
-        console.log('rank', rank);
-        console.log('from', from);
-        console.log('to', to);
         if (!id || !rank || !from || !to) {
             return;
         }
