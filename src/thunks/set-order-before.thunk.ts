@@ -1,5 +1,5 @@
 import {AppThunkDispatch, AppThunkGetState} from "./thunk.type";
-import {editBlock} from "../middleware/nodes/slice";
+import {editBlock} from "../middleware/nodes/thunks";
 
 type Data = {
     target: string;

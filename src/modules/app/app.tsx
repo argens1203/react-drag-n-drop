@@ -6,7 +6,8 @@ import {ROOT_ID} from "../../middleware/nodes/constants";
 import './app.css';
 import {getBlock} from "../../thunks";
 import { Block } from "../block-dnd/components/block";
-import { initBlock } from "../../thunks";
+import { createBlock } from "../../thunks";
+import AddIcon from '@material-ui/icons/Add';
 import {IS_PARENT} from "../../middleware/relationships/constants";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     <Container>
       {/*<Button onClick={() => {dispatch(initBlock())}}>initBlocks</Button>*/}
       <Button onClick={() => {dispatch(getBlock())}}>getBlocks</Button>
+      <Button onClick={() => {dispatch(createBlock())}}><AddIcon/></Button>
       {rootIds.map(id => <Block key={id} id={id}/>)}
     </Container>
   );
