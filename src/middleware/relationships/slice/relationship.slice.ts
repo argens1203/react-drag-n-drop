@@ -7,8 +7,12 @@ const relationshipSlice = createSlice({
     name: 'relationship',
     initialState: initialRelationshipState,
     reducers: {
+        // Test / Design: what to do if relationship exists
         registerRelationship: (state, action) => {
             const {relationship, type} = action.payload;
+            if (!!state.type[relationship]){
+                return;
+            }
             state.type[relationship] = type;
             state.lookup[relationship] = {};
             state.reverseLookup[relationship] = {};

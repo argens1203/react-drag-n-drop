@@ -10,5 +10,6 @@ export function createBlock(){
             .then(res => NodeEntity.fromBackend(res)?.id)
             // .then(block => dispatch(putBlockAction(block)));
         dispatch(getBlock()); // TODO: Performance - need to splice this action <---
+        // Should only get the newly created block
     }
 }

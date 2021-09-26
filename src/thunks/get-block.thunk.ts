@@ -1,14 +1,16 @@
+import {AppThunkDispatch, AppThunkGetState} from "./thunk.type";
 import {putBlock} from "../middleware/nodes/slice";
 import {getRelationships} from "../middleware/relationships/api";
-import {getAllNodes} from "../middleware/nodes/api";
+import {getNodes} from "../middleware/nodes/api";
 import {NodeEntity} from "../middleware/nodes/entities";
 import {RelationshipEntity} from "../middleware/relationships/entities";
 import {BackendRelationship} from "../middleware/relationships/entities";
 import {ROOT_ID} from "../middleware/nodes/constants";
-import {AppDispatch} from "../middleware/store/store";
 import {addRelationship, registerRelationship} from "../middleware/relationships/slice";
 import {IS_PARENT} from "../middleware/relationships/constants";
 import {RelationshipType} from "../middleware/relationships/enums";
+import { setCursor } from "../middleware/cursors/slice/cursor.slice";
+import { CursorType } from "../middleware/cursors/enums";
 
 async function injectRelationships(from: string): Promise<[string, BackendRelationship[]]> {
     const relationships: BackendRelationship[] = await getRelationships({from});
@@ -16,8 +18,13 @@ async function injectRelationships(from: string): Promise<[string, BackendRelati
 }
 
 export function getBlock() {
-    return async function (dispatch: AppDispatch) {
-        const nodes = await getAllNodes();
+    return async function (dispatch: AppThunkDispatch, getState: AppThunkGetState) {
+        const currentState = getState();
+        const currentCursor = currentState.cursor.FORWARD[ROOT_ID];
+
+        const {nodes, cursor} = await getNodes({cursor: currentCursor});
+        dispatch(setCursor({type: CursorType.FORWARD, parent: ROOT_ID, cursor}));
+
         const ids: string[] = [];
 
         nodes.forEach((n) => {
