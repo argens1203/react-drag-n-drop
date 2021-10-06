@@ -21,10 +21,12 @@ type CursorLimit = {
 
 export async function getNodes(input?: CursorLimit): Promise<CursorNodes> {
     const {cursor, limit = 3} = input || {};
+    const sortBy = 'createdAt';
     const {items, cursor: nextCursor} = await axios.get(`${BASE_URL}/nodes`, {
         params: {
             limit, 
-            cursor
+            cursor,
+            sortBy,
         }
     }).then (res => res.data.data || {});
 
