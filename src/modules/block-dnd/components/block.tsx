@@ -10,6 +10,8 @@ import {DragDeletable} from "../../../components/drag-deletable";
 import {marginPerLevel} from "../styles/margin-per-level.style";
 import {deleteBlock} from "../../../thunks";
 import {IS_PARENT} from "../../../middleware/relationships/constants";
+import {BlockExpandHandle} from './block-expand-handle';
+import {BlockGoHandle} from './block-go-handle';
 
 interface Props extends BlockTransferData {
     level?: number;
@@ -39,6 +41,8 @@ export function Block(props: Props) {
                             display: 'flex',
                         }}/>
                         <BlockDroppable id={id}/>
+                        <BlockExpandHandle id={id}/>
+                        <BlockGoHandle id={id}/>
                     </Box>
                 </DragDeletable>
             </Box>

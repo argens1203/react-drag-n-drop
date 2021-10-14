@@ -8,16 +8,19 @@ import {Provider} from 'react-redux';
 import {store} from "./middleware/store/store";
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
+import {BrowserRouter as Router} from 'react-router-dom';
 // import { TouchBackend } from 'react-dnd-touch-backend';
 
 ReactDOM.render(
     <React.StrictMode>
+        <Router>
         <Provider store={store}>
             {/*<DndProvider backend={TouchBackend}>*/}
             <DndProvider backend={HTML5Backend}>
                 <App/>
             </DndProvider>
         </Provider>
+        </Router>
     </React.StrictMode>,
     document.getElementById('root')
 );
