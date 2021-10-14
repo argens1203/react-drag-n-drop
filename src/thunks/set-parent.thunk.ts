@@ -1,4 +1,4 @@
-import {addRelationship, removeRelationship} from "../middleware/relationships/slice";
+import {addRelationship, removeRelationship} from "../middleware/relationships/thunks";
 import {IS_PARENT} from "../middleware/relationships/constants";
 import {AppThunkDispatch, AppThunkGetState} from "./thunk.type";
 import {getParent, getParents} from "../middleware/relationships/utils";
@@ -21,6 +21,7 @@ export function setParent(data: Data) {
                 dispatch(addRelationship({to: childChild, from: childParent, relationship: IS_PARENT}));
             })
         }
+        // FIXME: race condition
         dispatch(removeRelationship({to: child, relationship: IS_PARENT}));
         dispatch(addRelationship({from: parent, to: child, relationship: IS_PARENT}));
     }
