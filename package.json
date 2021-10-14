@@ -23,6 +23,7 @@
     "react-dnd-touch-backend": "^14.0.0",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.3",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "reflect-metadata": "^0.1.13",
     "short-uuid": "^4.2.0",
@@ -34,7 +35,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix --ext .ts,.tsx src"
   },
   "eslintConfig": {
     "extends": [
@@ -56,6 +58,7 @@
   },
   "devDependencies": {
     "@types/luxon": "^1.27.1",
+    "@types/react-router-dom": "^5.3.1",
     "@types/redux-logger": "^3.0.9",
     "@types/redux-mock-store": "^1.0.3",
     "redux-logger": "^3.0.6",
