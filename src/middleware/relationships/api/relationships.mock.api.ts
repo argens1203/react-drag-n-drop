@@ -16,6 +16,3 @@ class Params {
 export async function getRelationships(params: Params): Promise<BackendRelationship[]> {
     return [];
 }
-
-
-

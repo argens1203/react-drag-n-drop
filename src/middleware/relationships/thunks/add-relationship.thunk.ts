@@ -11,8 +11,8 @@ type AddRelationshipInput = {
 export function addRelationship(input: AddRelationshipInput){
     return async function (dispatch: AppThunkDispatch, getState: AppThunkGetState){
         const {relationship, from, to} = input;
-        return await addApi(from, to)
-            .then(() => {
+        return await addApi({from: to, to: from})
+            .then((res) => {
                 dispatch(addAction(input));
                 // TODO: Loading UI
             })

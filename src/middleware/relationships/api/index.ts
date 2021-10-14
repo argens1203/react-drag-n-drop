@@ -1,2 +1,2 @@
-export * from './relationships.mock.api';
-// export * from './relationships.api';
+// export * from './relationships.mock.api';
+export * from './relationships.api';

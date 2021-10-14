@@ -3,12 +3,23 @@ import {BASE_URL} from "../../../config";
 import {deserialize} from "class-transformer";
 import {BackendRelationship} from "../entities";
 
-export async function createRelationship(from: string, to: string) {
+// Here, child should points towards parents
+// {from: child, to: parent}
+// Swap at a higher level
+
+type Input = {
+    from: string,
+    to: string,
+}
+
+export async function createRelationship(input: Input) {
+    const {from, to} = input;
     const n = await axios.post(`${BASE_URL}/relationships/belongs/from/${from}/to/${to}`).then(res => res.data.data);
     return deserialize(BackendRelationship, JSON.stringify(n));
 }
 
-export async function removeRelationship(from: string, to: string) {
+export async function removeRelationship(input: Input) {
+    const {from, to} = input;
     return await axios.delete(`${BASE_URL}/relationships/belongs/from/${from}/to/${to}`)
 }
 
