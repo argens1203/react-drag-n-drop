@@ -13,11 +13,11 @@ export class NodeEntity {
     importance: number = Math.random();
 
     static fromBackend(n: BackendNode) {
-        const {title, meta = {}, importance} = n;
+        const {title, meta = {}, importance, ...rest} = n;
         const {id, isEnabled} = meta;
         if (!id || !isEnabled) {
             return;
         }
-        return new NodeEntity({id, title, importance});
+        return new NodeEntity({id, title, importance, ...rest});
     }
 }

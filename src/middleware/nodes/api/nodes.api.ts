@@ -2,7 +2,6 @@ import axios from "axios";
 import {BASE_URL} from "../../../config";
 import {BackendNode} from "../entities";
 import {deserialize} from "class-transformer";
-import * as querystring from "querystring";
 
 export async function getAllNodes(): Promise<BackendNode[]> {
     const nodes = await axios.get(`${BASE_URL}/nodes`).then(res => res.data.data);
@@ -59,4 +58,3 @@ export async function editNode(id: string, updates: Partial<BackendNode>) {
 export async function removeNode(id: string) {
     return await axios.delete(`${BASE_URL}/nodes/${id}`).then(res => res.data);
 }
-

@@ -15,11 +15,16 @@ const initialFilterFn: (node: NodeEntity) => boolean = () => true;
 
 const initialOrder: string[] = [];
 
+const initialTitleLookoup: {
+    [title: string]: string;
+} = {};
+
 export const initialBlockState = {
     blocks: initialBlockLookup,
     compareFn: initialCompareFn,
     filterFn: initialFilterFn,
     order: initialOrder,
+    titleLookup: initialTitleLookoup,
 };
 
 // TODO: rename to Node

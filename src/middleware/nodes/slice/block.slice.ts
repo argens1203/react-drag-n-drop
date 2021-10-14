@@ -36,9 +36,16 @@ const blockSlice = createSlice({
         setFilterFn: (state, action) => {
             state.filterFn = action.payload;
             // TODO: re-filter
+        },
+        saveBlock: (state, action) => {
+            const block: NodeEntity = action.payload;
+            if (!block.title){
+                return;
+            }
+            state.titleLookup[block.title] = block.id;
         }
     }
 });
 
 export default blockSlice.reducer;
-export const {putBlock, editBlock, removeBlock} = blockSlice.actions;
+export const {putBlock, editBlock, removeBlock, saveBlock} = blockSlice.actions;
