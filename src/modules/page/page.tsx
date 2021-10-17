@@ -1,0 +1,37 @@
+import React from "react";
+import {useDispatch, useSelector} from "react-redux";
+import AddIcon from '@material-ui/icons/Add';
+import {Button, Container, Typography} from "@material-ui/core";
+import {RootState} from "../../middleware/store/store";
+import {IS_PARENT} from "../../middleware/relationships/constants";
+import { BlockSimplified } from "../block-dnd/components";
+import { createBlock, getBlockWithTitle } from "../../thunks";
+import './page.css';
+import { getChildren } from "../../thunks/get-children.thunk";
+
+type Props = {
+  id?: string;
+};
+
+export function Page(props: Props) {
+  const {id = ''} = props;
+  const lookup = useSelector((state: RootState) => state.relationship.lookup[IS_PARENT]?.[id]) || {};
+  const order = useSelector((state: RootState) => state.block.order || []);
+  
+  const ids = order.filter(nodeId => lookup[nodeId]);
+  const dispatch = useDispatch();
+
+  if(!id){
+    return null;
+  }
+
+  return (
+    <Container>
+      <Button onClick={() => {dispatch(getChildren(id))}}>getBlocks</Button>
+      <Button onClick={() => {dispatch(createBlock())}}><AddIcon/></Button>
+      <Typography>id: </Typography>
+      <Typography>{id}</Typography>
+      {ids.map(id => <BlockSimplified key={id} id={id}/>)}
+    </Container>
+  );
+}

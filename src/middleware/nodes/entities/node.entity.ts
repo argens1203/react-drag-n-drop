@@ -9,6 +9,8 @@ export class NodeEntity {
 
     title?: string;
 
+    data?: any;
+
     // Higher is more important
     importance: number = Math.random();
 

@@ -1,7 +1,7 @@
+import React, {ForwardedRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Input} from "@material-ui/core";
 import {RootState} from "../../../middleware/store/store";
-import React, {ForwardedRef} from "react";
 import {Hoverable} from "../../../components/hoverable/interfaces";
 import {BlockTransferData} from "../interfaces";
 import {editBlock} from "../../../middleware/nodes/thunks";
