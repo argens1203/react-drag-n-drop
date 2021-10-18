@@ -17,3 +17,12 @@ export async function getChildren(id: string): Promise<CombinedReturn>{
         links: links.map((l: any) => deserialize(BackendRelationship, JSON.stringify(l))),
     }
 }
+
+export async function createChildren(id: string, body: Record<string, any>): Promise<CombinedReturn>{
+    const {nodes, links} = await axios.post(`${BASE_URL}/nodes/${id}/children`)
+    .then(res => res.data.data);
+    return {
+        nodes: nodes.map((n: any) => deserialize(BackendNode, JSON.stringify(n))),
+        links: links.map((l: any) => deserialize(BackendRelationship, JSON.stringify(l))),
+    };
+}
