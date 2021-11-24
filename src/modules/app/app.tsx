@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import {RelationshipType} from "../../middleware/relationships/enums";
 import {registerRelationship} from "../../middleware/relationships/slice";
 import {IS_PARENT} from "../../middleware/relationships/constants";
+import { NavigationalHeader } from "../../components/headers/navigational-header";
+import { Container } from "@material-ui/core";
 
 function App() {
   const {search} = useLocation();
@@ -20,7 +22,9 @@ function App() {
   const id = query.get('id') ?? undefined;
 
   return (
-      <Switch>
+      <Container>
+        <NavigationalHeader id={id} title={title}/>
+        <Switch>
         <Route path='/detail'>
           <Detail id={id}/>
         </Route>
@@ -34,6 +38,7 @@ function App() {
           <Tree title={title}/>
         </Route>
       </Switch>
+      </Container>
   );
 }
 

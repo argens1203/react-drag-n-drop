@@ -8,6 +8,7 @@ import { BlockSimplified } from "../block-dnd/components";
 import { createBlock, getBlockWithTitle } from "../../thunks";
 import './page.css';
 import { getChildren } from "../../thunks/get-children.thunk";
+import { DebugHeader } from "../../components/headers";
 
 type Props = {
   id?: string;
@@ -27,10 +28,10 @@ export function Page(props: Props) {
 
   return (
     <Container>
+      <DebugHeader id={id}/>
       <Button onClick={() => {dispatch(getChildren(id))}}>getBlocks</Button>
       <Button onClick={() => {dispatch(createBlock())}}><AddIcon/></Button>
-      <Typography>id: </Typography>
-      <Typography>{id}</Typography>
+      <Typography>id: {id}</Typography>
       {ids.map(id => <BlockSimplified key={id} id={id}/>)}
     </Container>
   );

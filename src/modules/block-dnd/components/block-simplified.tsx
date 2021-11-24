@@ -10,6 +10,7 @@ type Props = {
 export function BlockSimplified(props: Props){
     const {id} = props;
     const block: NodeEntity = useSelector((state: RootState) => state.block.blocks[id]) || {};
+    console.log(block);
     const {title, data} = block;
     if (!title && !data) return null;
     return (

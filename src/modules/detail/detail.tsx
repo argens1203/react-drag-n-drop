@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Container, Divider, Typography } from "@material-ui/core";
 import { NodeEntity } from "../../middleware/nodes/entities";
 import { RootState } from "../../middleware/store/store";
+import { DebugHeader } from "../../components/headers";
 
 type Props = {
     id?: string;
@@ -22,6 +23,7 @@ export function Detail (props: Props){
     }
     return (
         <Container>
+            <DebugHeader id={id}/>
             {entries.map(([k, v], idx) => (
                 <React.Fragment key={idx}>
                     <Typography>{k}</Typography>

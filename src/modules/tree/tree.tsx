@@ -1,12 +1,12 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import AddIcon from '@material-ui/icons/Add';
 import {Button, Container, Typography} from "@material-ui/core";
 import {RootState} from "../../middleware/store/store";
 import {IS_PARENT} from "../../middleware/relationships/constants";
 import { Block } from "../block-dnd/components/block";
 import { createBlock, getBlockWithTitle } from "../../thunks";
 import './tree.css';
+import { DebugHeader } from "../../components/headers";
 
 type Props = {
   title?: string;
@@ -23,9 +23,12 @@ export function Tree(props: Props) {
 
   return (
     <Container>
-      <Button onClick={() => {dispatch(getBlockWithTitle(title))}}>getBlocks</Button>
-      <Button onClick={() => {dispatch(createBlock())}}><AddIcon/></Button>
-      <Typography>title</Typography>
+      <DebugHeader id={''} title={title}/>
+      <Container>
+        <Typography>
+          This page gets block by title
+        </Typography>
+      </Container>
       {ids.map(id => <Block key={id} id={id}/>)}
     </Container>
   );
