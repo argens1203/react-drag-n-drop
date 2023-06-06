@@ -1,4 +1,4 @@
 export interface Hoverable {
-    hovered: boolean;
-    canDrop: boolean;
+  hovered: boolean;
+  canDrop: boolean;
 }
