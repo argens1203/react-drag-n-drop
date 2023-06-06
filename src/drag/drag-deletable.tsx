@@ -48,7 +48,7 @@ export function DragDeletable(props: Props) {
         if (passedThreshold && !isDragging) {
             setTimeout(() => onDelete(), DELETE_DELAY);
         }
-    }, [passedThreshold, isDragging])
+    }, [passedThreshold, isDragging, onDelete])
 
     return (
         <div ref={ref}
