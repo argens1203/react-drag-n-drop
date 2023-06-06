@@ -1,3 +1,3 @@
 export interface BlockData {
-    id: string;
+  id: string;
 }
